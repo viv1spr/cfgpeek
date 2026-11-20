@@ -1,0 +1,6 @@
+https://cs-config.com/robots.txt 868 'User-agent: SemrushBot\nDisallow: /\n\nUser-agent: *\nAllow: /*.js\nAllow: /*.css\nAllow: /*.jpg\nAllow: /*.png\nAllow: /*.gif\nAllow: /*?page\nAllow: /*?ref=\nAllow: /load/rssya_zen\nAllow: /news/rssya_zen\nAllow'
+https://cs-config.com/sitemap.xml 806 '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n\t<sitemap>\n\t\t<loc>https://cs-config.com/sitemap-blog.xml</loc>\n\t</sitemap>\n\n\t<sitemap>\n\t\t<loc>'
+https://cs-config.com/sitemap_index.xml 29 'ERR HTTP Error 404: Not Found'
+r1nkle 250326
+donk 250595
+fallen 252201
