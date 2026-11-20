@@ -209,7 +209,7 @@ function postCard(b){return '<a class="post" href="#blog--'+b.slug+'"><div class
 function bigSil(){return '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="36" r="19" fill="#6b5a44"/><path d="M8 100c0-26 19-42 42-42s42 16 42 42z" fill="#4a3d2c"/></svg>'}
 function duo(){var best=D.players.slice().sort(function(a,b){return b.xhs.length-a.xhs.length})[0];
  var tr=D.teams.map(function(t){var ro=D.players.filter(function(p){return p.team===t.slug});
-  return '<div class="trow"><span class="lg">'+t.tag+tlogo(t)+'</span><a class="nm" href="#t--'+t.slug+'"><b>'+esc(t.name)+'</b><small>'+esc(t.country)+' · '+ro.length+' игроков</small></a><span class="roster">'+ro.map(function(p){return '<a href="#p--'+p.slug+'--crosshair" title="'+esc(p.nick)+'" aria-label="'+esc(p.nick)+'">'+sil()+'<img class="pp" src="/img/players/'+p.slug+'.jpg" alt="" loading="lazy" onerror="this.remove()">'+'</a>'}).join("")+'</span></div>'}).join("");
+  return '<div class="trow"><span class="lg">'+t.tag+tlogo(t)+'</span><a class="nm" href="#t--'+t.slug+'"><b>'+esc(t.name)+'</b><small>'+esc(t.country)+' · '+ro.length+' игроков</small></a><span class="roster">'+ro.map(function(p){return '<a href="#p--'+p.slug+'--crosshair" title="'+esc(p.nick)+'" aria-label="'+esc(p.nick)+'">'+rAva(p)+'</a>'}).join("")+'</span></div>'}).join("");
  return '<section class="duo"><div><div class="h2s"><h2>Лучший конфиг</h2></div><a class="best" href="#p--'+best.slug+'--config"><span class="ph"><span class="stamp">Выбор редакции</span>'+face(best)+'</span><span class="bar"><b>'+esc(best.nick)+'</b><span>'+esc(TB[best.team].name)+'</span></span><span class="cfg"><div><span>eDPI</span><b>'+best.edpi+'</b></div><div><span>Сенса</span><b>'+best.sens+'</b></div><div><span>DPI</span><b>'+best.dpi+'</b></div><div><span>Разрешение</span><b>'+best.res+'</b></div></span></a></div>'+
  '<div><div class="h2s"><h2>Команды</h2><a href="#teams">Все команды</a></div><div class="teams">'+tr+'</div></div></section>'}
 var _vHome=vHome;
@@ -549,6 +549,7 @@ function cyr(p){return CYR[p.slug]||""}
 function cyrGen(n){if(!n)return "";if(/[бвгджзклмнпрстфхцчшщ]$/i.test(n))return n+"а";if(/й$/.test(n))return n.slice(0,-1)+"я";return n}
 function pl(n,a,b,c){var m=n%10,h=n%100;return n+' '+(m===1&&h!==11?a:m>=2&&m<=4&&(h<12||h>14)?b:c)}
 function TX(s,o){var I=window.I18N,r=(I&&I.t&&I.t[s]!=null)?I.t[s]:s;if(o)r=r.replace(/\{(\w+)\}/g,function(_,n){return o[n]!=null?o[n]:"{"+n+"}"});return r}
+function rAva(p){var t=TW[p.slug],x='<i class="rx">'+xhSvg(last(p),40)+'</i>';return x+(t&&t.face!==false?'<img class="pp tw" src="'+esc(t.img)+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':"")}
 function LG(){return (window.__STATIC&&window.__STATIC.lang)||"ru"}
 function med(a){a=a.slice().sort(function(x,y){return x-y});var m=a.length>>1;return a.length%2?a[m]:(a[m-1]+a[m])/2}
 var COLN_EN={"Белый":"white","Жёлтый":"yellow","Голубой":"cyan","Зелёный":"green","Свой цвет":"custom"};
