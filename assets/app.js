@@ -659,6 +659,44 @@ function tInfo(t){var x=TI[t.slug];if(!x)return "";var ru=LG()==="ru",L=function
  if(x.leg)h+='<h3>'+L("Известные игроки прошлых составов","Notable former players")+'</h3><p class="ti-g">'+x.leg.map(esc).join(" · ")+'</p>';
  return h+'</div></div></section>'}
 var _vTeam=vTeam;vTeam=function(t){var s=_vTeam(t),k=s.indexOf('<div class="tw"');return k<0?s:s.slice(0,k)+tInfo(t)+s.slice(k)};
+
+/* ===== v26: матчи, форма, карты и соперники команды (data/live.json из PandaScore) ===== */
+var LIVE=null;
+try{fetch("/data/live.json").then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.teams){LIVE=j;var app=document.getElementById("app");if(app&&/^#?t--/.test(H()||"")){app.dataset.p="";route()}}}).catch(function(){})}catch(e){}
+function dmy(s){if(!s)return "";var d=new Date(s);return ("0"+d.getUTCDate()).slice(-2)+"."+("0"+(d.getUTCMonth()+1)).slice(-2)+"."+d.getUTCFullYear()}
+function tLive(t){var x=LIVE&&LIVE.teams&&LIVE.teams[t.slug];if(!x)return "";var ru=LG()==="ru",L=function(r,e,o){return ru?r.replace(/\{(\w+)\}/g,function(_,n){return o[n]}):TX(e,o)};
+ var P=(x.past||[]).filter(function(m){return m.win!==null&&m.win!==undefined});
+ if(!P.length&&!(x.next||[]).length)return "";
+ var W=P.filter(function(m){return m.win}).length,last10=P.slice(0,10),streak=0;
+ for(var i=0;i<P.length&&P[i].win===P[0].win;i++)streak++;
+ var maps={};P.forEach(function(m){(m.games||[]).forEach(function(g){if(!g.map||g.win===null||g.win===undefined)return;var k=g.map;maps[k]=maps[k]||[0,0];maps[k][0]++;if(g.win)maps[k][1]++})});
+ var mk=Object.keys(maps).sort(function(a,b){return maps[b][0]-maps[a][0]});
+ var opp={};P.forEach(function(m){if(!m.opp)return;opp[m.opp]=opp[m.opp]||[0,0];if(m.win)opp[m.opp][0]++;else opp[m.opp][1]++});
+ var ok=Object.keys(opp).sort(function(a,b){return (opp[b][0]+opp[b][1])-(opp[a][0]+opp[a][1])}).slice(0,6);
+ var tours=[];P.forEach(function(m){var n=m.serie||m.league||m.tour;if(n&&tours.indexOf(n)<0)tours.push(n)});
+ var since=P.length?dmy(P[P.length-1].at):"";
+ var h='<section class="card2 tlive"><header><h2>'+ico("cross")+L("Матчи и статистика","Matches and stats",{})+'</h2><span class="tl-u">'+L("обновлено {d}","updated {d}",{d:dmy(LIVE.updated)})+'</span></header>';
+ if(P.length){
+  h+='<div class="tl-k"><div><span>'+L("Матчей с {d}","Matches since {d}",{d:since})+'</span><b>'+P.length+'</b></div><div><span>'+L("Победы","Wins",{})+'</span><b>'+W+' · '+Math.round(100*W/P.length)+'%</b></div>'+
+   '<div><span>'+L("Серия","Streak",{})+'</span><b class="'+(P[0].win?"w":"l")+'">'+streak+(P[0].win?L(" побед"," W",{}):L(" поражений"," L",{}))+'</b></div>'+
+   '<div><span>'+L("Форма, 10 матчей","Form, last 10",{})+'</span><b class="tl-f">'+last10.map(function(m){return '<i class="'+(m.win?"w":"l")+'" title="'+esc((m.opp||"")+" "+(m.us!=null?m.us+":"+m.them:""))+'"></i>'}).join("")+'</b></div></div>';
+ }
+ var row=function(m,fut){return '<li class="'+(fut?"":m.win?"w":"l")+'"><time>'+dmy(m.at)+'</time><b>'+esc(m.opp||"TBD")+'</b><span class="tl-s">'+(fut?"BO"+(m.bo||"?"):(m.us!=null?m.us+":"+m.them:""))+'</span><small>'+esc(m.serie||m.league||m.tour||"")+'</small></li>'};
+ h+='<div class="tl-g">';
+ if((x.next||[]).length)h+='<div><h3>'+L("Ближайшие матчи","Upcoming matches",{})+'</h3><ul class="tl-m">'+x.next.slice(0,5).map(function(m){return row(m,1)}).join("")+'</ul></div>';
+ if(P.length)h+='<div><h3>'+L("Последние матчи","Recent matches",{})+'</h3><ul class="tl-m">'+P.slice(0,8).map(function(m){return row(m,0)}).join("")+'</ul></div>';
+ if(mk.length)h+='<div><h3>'+L("Карты: процент побед","Maps: win rate",{})+'</h3><div class="tl-maps">'+mk.map(function(k){var v=maps[k],p=Math.round(100*v[1]/v[0]);return '<div><span>'+esc(k)+'</span><i><em style="width:'+p+'%"></em></i><b>'+p+'%</b><small>'+v[1]+'/'+v[0]+'</small></div>'}).join("")+'</div></div>';
+ if(ok.length)h+='<div><h3>'+L("Частые соперники","Frequent opponents",{})+'</h3><ul class="tl-o">'+ok.map(function(k){return '<li><b>'+esc(k)+'</b><span><em class="w">'+opp[k][0]+'</em> : <em class="l">'+opp[k][1]+'</em></span></li>'}).join("")+'</ul></div>';
+ if(tours.length)h+='<div><h3>'+L("Турниры","Tournaments",{})+'</h3><ul class="tl-t">'+tours.slice(0,8).map(function(n){return '<li>'+esc(n)+'</li>'}).join("")+'</ul></div>';
+ return h+'</div><p class="tl-src">'+L("Данные о матчах: PandaScore","Match data: PandaScore",{})+'</p></section>'}
+var _vTeam2=vTeam;vTeam=function(t){var s=_vTeam2(t),k=s.indexOf('<div class="tw"');return k<0?s:s.slice(0,k)+tLive(t)+s.slice(k)};
+
+/* ===== v27: кнопка поиска в шапке на телефоне ===== */
+(function(){function set(on){var hd=document.querySelector(".hd"),b=document.getElementById("sbtn");if(!hd||!b)return;hd.classList.toggle("so",on);b.setAttribute("aria-expanded",on?"true":"false");if(on){var i=hd.querySelector(".srch input");if(i)setTimeout(function(){i.focus()},0)}}
+ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#sbtn");if(b){set(!document.querySelector(".hd").classList.contains("so"));return}
+  var hd=document.querySelector(".hd.so");if(hd&&!e.target.closest(".hd .srch"))set(false)});
+ document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false)});
+ window.addEventListener("hashchange",function(){set(false)})})();
 function H(){var s=window.__STATIC;return location.hash||(s?"#"+s.page:"")}
 var _routeC=route;route=function(){var h=(H()||"").slice(1);if(h==="converter"||h==="sens"){if(h==="sens"&&!window.__STATIC){location.replace("#converter");return}
  document.getElementById("app").innerHTML=vConv();document.getElementById("app").dataset.p="";
