@@ -36,18 +36,21 @@ def main():
         slug, nick = q.get("slug"), (q.get("nick") or "")
         if not slug: continue
         cands = []
-        for c in [slug, re.sub(r"[^a-z0-9]", "", nick.lower()), nick.lower().replace(" ", "-")]:
+        for c in [slug, re.sub(r"[^a-z0-9]", "", nick.lower())]:
             if c and c not in cands: cands.append(c)
         got = None
         for c in cands:
             url = f"https://cs-config.com/{c}-cfg-csgo"
-            st, t = get(url); time.sleep(1.3)
+            st, t = get(url); time.sleep(1.0)
             if st == 200 and "page-player-val" in t:
                 got = dict(parse(t), url=url); break
         if got and (got["code"] or got["params"]):
+            got["params"].pop("Страна", None)
             out[slug] = got
         else:
             miss += 1
+        if len(out) % 25 == 0:
+            json.dump(out, open("data/csconfig.json", "w", encoding="utf-8"), ensure_ascii=False, indent=0)
     json.dump(out, open("data/csconfig.json", "w", encoding="utf-8"), ensure_ascii=False, indent=0)
     print(f"найдено: {len(out)}, нет на сайте: {miss}")
 if __name__ == "__main__":
