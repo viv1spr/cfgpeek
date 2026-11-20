@@ -554,7 +554,7 @@ footer .contact .c{margin-left:auto;color:#a89c84;font-size:13px}
 .twov{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:multiply;pointer-events:none}
 
 .twov,.pp.tw{transition:filter .25s,opacity .25s}
-@media(prefers-reduced-motion:reduce){.twov,.pp.tw{transition:none}.pp{background:#e6dcc4}}
+@media(prefers-reduced-motion:reduce){.twov,.pp.tw{transition:none}}.pp{background:#e6dcc4}
 
 /* ===== v16: вырезанные люди на плакате ===== */
 .cut{position:absolute;bottom:0;left:3%;height:94%;width:auto;max-width:62%;object-fit:contain;object-position:left bottom;z-index:1;pointer-events:none}
