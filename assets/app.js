@@ -640,6 +640,25 @@ function convInit(){var i=document.getElementById("oc");if(!i)return;var h=docum
  }
  i.addEventListener("input",run);h.addEventListener("change",run);msg.addEventListener("click",function(){i.value="CSGO-iCxok-KTVNX-shCzf-Evoek-weaAB";run()});run()}
 
+
+/* ===== v25: блок «О команде» ===== */
+var TI={"furia": {"f": 2017, "fin": [["IEM Cologne Major", 2026]], "leg": ["arT", "HEN1", "saffee", "drop"]}, "mouz": {"f": 2002, "aka": "mousesports", "city": "Hamburg", "nomaj": 1, "leg": ["NiKo", "ropz", "karrigan", "chrisJ", "oskar"]}, "spirit": {"f": 2015, "cs": 2016, "won": [["Perfect World Shanghai Major", 2024]], "leg": ["degster", "sdy", "zweih"]}, "vitality": {"f": 2013, "cs": 2018, "won": [["BLAST.tv Paris Major", 2023], ["BLAST.tv Austin Major", 2025], ["StarLadder Budapest Major", 2025]], "gs": [2025], "leg": ["shox", "RpK", "Spinx", "dupreeh", "Magisk"]}, "aurora": {"f": 2022}, "falcons": {"f": 2017, "cs": 2020, "won": [["IEM Cologne Major", 2026]], "leg": ["degster", "Magisk", "hAdji", "misutaaa"]}, "betboom": {"f": 2023}, "navi": {"f": 2009, "cs": 2012, "won": [["PGL Major Stockholm", 2021], ["PGL Major Copenhagen", 2024]], "fin": [["MLG Major Columbus", 2016], ["FACEIT Major London", 2018]], "gs": [2021], "leg": ["s1mple", "electroNic", "Zeus", "Edward", "GuardiaN", "flamie"]}, "fut": {"cs": 2025}, "mongolz": {"f": 2013, "cs": 2015, "fin": [["BLAST.tv Austin Major", 2025]]}, "g2": {"f": 2013, "cs": 2015, "city": "Madrid", "fin": [["PGL Major Stockholm", 2021]], "leg": ["NiKo", "kennyS", "shox", "m0NESY", "huNter-"]}, "parivision": {"f": 2023}, "legacy": {"f": 2023}, "liquid": {"f": 2000, "cs": 2015, "fin": [["ESL One Cologne Major", 2016]], "gs": [2019], "leg": ["Stewie2K", "nitr0", "Twistzz", "NAF"]}, "faze": {"f": 2010, "cs": 2016, "won": [["PGL Major Antwerp", 2022]], "fin": [["ELEAGUE Major Boston", 2018], ["PGL Major Copenhagen", 2024], ["Perfect World Shanghai Major", 2024], ["StarLadder Budapest Major", 2025]], "gs": [2022], "leg": ["olofmeister", "rain", "NiKo", "broky", "ropz"]}, "astralis": {"f": 2016, "won": [["ELEAGUE Major Atlanta", 2017], ["FACEIT Major London", 2018], ["IEM Katowice Major", 2019], ["StarLadder Major Berlin", 2019]], "gs": [2019], "leg": ["dev1ce", "dupreeh", "Xyp9x", "gla1ve", "Magisk"]}, "b8": {"f": 2020, "cs": 2021}, "heroic": {"f": 2016, "fin": [["IEM Rio Major", 2022]], "leg": ["cadiaN", "stavn", "TeSeS", "sjuush"]}, "m80": {"f": 2022, "cs": 2023}, "gamerlegion": {"fin": [["BLAST.tv Paris Major", 2023]]}, "pain": {"f": 2010, "cs": 2011}, "bcgame": {}};
+function tInfo(t){var x=TI[t.slug];if(!x)return "";var ru=LG()==="ru",L=function(r,e){return ru?r:TX(e)};
+ var rows=[];
+ if(x.f)rows.push([L("Основана","Founded"),x.f+(x.aka?" ("+(ru?"как ":TX("as")+" ")+x.aka+")":"")]);
+ if(x.cs&&x.cs!==x.f)rows.push([L("Состав по CS","Counter-Strike team since"),x.cs]);
+ rows.push([L("Победы на мейджорах","Major titles"),x.won?String(x.won.length):(ru?"нет":TX("none"))]);
+ if(x.gs)rows.push(["Grand Slam",x.gs.join(", ")]);
+ var li=function(a){return '<ul class="ti-l">'+a.map(function(e){return '<li><b>'+e[1]+'</b> '+esc(e[0])+'</li>'}).join("")+'</ul>'};
+ var h='<section class="card2 tinfo"><header><h2>'+ico("cross")+L("О команде","About the team")+'</h2></header><div class="ti">'+
+  '<div class="tbl">'+rows.map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1]+'</b></div>'}).join("")+'</div><div>';
+ if(x.won)h+='<h3>'+L("Чемпионы мейджора","Major champions")+'</h3>'+li(x.won);
+ if(x.fin)h+='<h3>'+L("Финалы мейджоров","Major finals")+'</h3>'+li(x.fin);
+ if(x.nomaj)h+='<p class="ti-n">'+L("Больше всех мейджоров CS:GO и CS2 без единой победы.","The most CS:GO and CS2 Majors played without a title.")+'</p>';
+ if(!x.won&&!x.fin&&!x.nomaj)h+='<p class="ti-n">'+L("Финалов мейджоров у команды пока не было.","The team hasn't reached a Major final yet.")+'</p>';
+ if(x.leg)h+='<h3>'+L("Известные игроки прошлых составов","Notable former players")+'</h3><p class="ti-g">'+x.leg.map(esc).join(" · ")+'</p>';
+ return h+'</div></div></section>'}
+var _vTeam=vTeam;vTeam=function(t){var s=_vTeam(t),k=s.indexOf('<div class="tw"');return k<0?s:s.slice(0,k)+tInfo(t)+s.slice(k)};
 function H(){var s=window.__STATIC;return location.hash||(s?"#"+s.page:"")}
 var _routeC=route;route=function(){var h=(H()||"").slice(1);if(h==="converter"||h==="sens"){if(h==="sens"&&!window.__STATIC){location.replace("#converter");return}
  document.getElementById("app").innerHTML=vConv();document.getElementById("app").dataset.p="";
