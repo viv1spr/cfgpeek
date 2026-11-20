@@ -437,7 +437,7 @@ function spy(){if(SPY){SPY.disconnect();SPY=null}tocCurrent()}
 /* переход по адресу с разделом (#p--ник--video): прокрутить с учётом шапки */
 var _route5=route;route=function(){_route5();var m=H().slice(1).split("--");if(m[0]==="p"&&m[2]){var map={crosshair:"crosshair",config:"mouse"};var id=map[m[2]]||m[2];setTimeout(function(){tocGo(id,false)},60)}};
 /* ===== логотипы команд из img/teams/<slug>.png (кладёт fetch_assets.py) ===== */
-function tlogo(t){return '<img class="tl" src="/img/teams/'+t.slug+'.png" alt="" loading="lazy" onerror="this.remove()">'}
+function tlogo(t){return '<img class="tl" src="/img/teams/'+t.slug+'.png?v=2" alt="" loading="lazy" onerror="this.remove()">'}
 /* ===== подписи к фото игроков из img/players/credits.json ===== */
 var CR={};
 function applyCredit(){var m=H().slice(1).split("--");if(m[0]!=="p")return;var c=CR[m[1]];var w=document.querySelector(".hero2 .facts")||document.querySelector(".prof .itab")||document.querySelector(".pstrip .who");
@@ -536,7 +536,7 @@ try{fetch("/data/twitch.json").then(function(r){return r.ok?r.json():{}}).then(f
 try{fetch("/data/cut.json").then(function(r){return r.ok?r.json():{}}).then(function(j){CUT=j||{};if(Object.keys(CUT).length){var app=document.getElementById("app");if(app)app.dataset.p="";route()}}).catch(function(){})}catch(e){}
 
 /* ===== v19: логотип команды, если файл есть в img/teams, иначе тег ===== */
-function lgi(slug){return '<img src="/img/teams/'+slug+'.png" alt="" onload="this.parentNode.classList.add(\'lg\')" onerror="this.remove()">'}
+function lgi(slug){return '<img src="/img/teams/'+slug+'.png?v=2" alt="" onload="this.parentNode.classList.add(\'lg\')" onerror="this.remove()">'}
 function tgb(slug){var t=TB[slug];if(!t)return "";if(slug==="streamers")return '<span class="tg">TV</span>';return '<span class="tg" title="'+esc(t.name)+'">'+lgi(slug)+'<b>'+t.tag+'</b></span>'}
 function vTeams(){document.title="Команды CS2: составы, прицелы и конфиги | CfgPeek";
  return shell(crumbs([["home","Главная"],["","Команды"]]),'<div class="pghead"><h1>Команды</h1><p>'+D.teams.length+' команд топ-рейтинга HLTV. Откройте команду, чтобы увидеть прицелы и настройки всего состава.</p></div><div class="tgrid">'+
