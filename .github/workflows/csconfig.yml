@@ -1,9 +1,11 @@
 name: Настройки игроков (cs-config)
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "41 3 * * 1"
   push:
     paths:
-      - "scripts/csconfig_*.py"
+      - "scripts/csconfig_fetch.py"
       - ".github/workflows/csconfig.yml"
 permissions:
   contents: write
@@ -21,7 +23,7 @@ jobs:
           python-version: "3.12"
       - name: Собрать
         run: |
-          if [ -f scripts/csconfig_fetch.py ]; then python scripts/csconfig_fetch.py; else python scripts/csconfig_probe.py; fi
+          python scripts/csconfig_fetch.py
       - name: Сохранить
         run: |
           git config user.name "cfgpeek-bot"
