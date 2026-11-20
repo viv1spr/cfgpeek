@@ -13,7 +13,10 @@ def get(u):
         except Exception:
             time.sleep(5)
     return 0, ""
-def txt(s): return html.unescape(re.sub(r"<[^>]+>", "", s)).strip()
+def txt(s):
+    s = re.sub(r"<script.*?</script>", "", s, flags=re.S)
+    s = html.unescape(re.sub(r"<[^>]+>", "", s)).strip()
+    return s.splitlines()[-1].strip() if "\n" in s else s
 def parse(t):
     d = {}
     for lab, val in re.findall(r'<span class="page-player-label">(.*?)</span>\s*<span class="page-player-val">(.*?)</span>', t, re.S):
