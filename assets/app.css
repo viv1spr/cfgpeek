@@ -554,7 +554,7 @@ footer .contact .c{margin-left:auto;color:#a89c84;font-size:13px}
 .twov{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:multiply;pointer-events:none}
 
 .twov,.pp.tw{transition:filter .25s,opacity .25s}
-@media(prefers-reduced-motion:reduce){.twov,.pp.tw{transition:none}}
+@media(prefers-reduced-motion:reduce){.twov,.pp.tw{transition:none}.pp{background:#e6dcc4}}
 
 /* ===== v16: вырезанные люди на плакате ===== */
 .cut{position:absolute;bottom:0;left:3%;height:94%;width:auto;max-width:62%;object-fit:contain;object-position:left bottom;z-index:1;pointer-events:none}
@@ -595,4 +595,4 @@ footer .contact .c{margin-left:auto;color:#a89c84;font-size:13px}
 .cvmsg{font-size:13px;color:var(--mut);cursor:pointer;text-decoration:underline dotted}
 .cvnote{font-size:13px;color:var(--mut);margin:12px 0 0}.cvnote code{font-size:12px}
 #oc{font-family:ui-monospace,Consolas,monospace}
-.langs{display:flex;flex-wrap:wrap;gap:6px 14px;grid-column:1/-1;font-size:13px;margin-top:6px}.langs a{color:#a89c84}.langs a[aria-current]{color:var(--crm2);font-weight:700}.drawer .langs{margin-top:20px}.drawer .langs a{color:var(--crm);font-size:15px}.pp{background:#e6dcc4}
+@media(min-width:900px){.hero2 h1{font-size:clamp(34px,3.2vw,46px);padding:2px 12px 4px}}.langs{display:flex;flex-wrap:wrap;gap:6px 14px;grid-column:1/-1;font-size:13px;margin-top:6px}.langs a{color:#a89c84}.langs a[aria-current]{color:var(--crm2);font-weight:700}.drawer .langs{margin-top:20px}.drawer .langs a{color:var(--crm);font-size:15px}

@@ -384,14 +384,14 @@ function ico(n){var P={
 var SIC={twitter:"x",x:"x",twitch:"twitch",instagram:"instagram",youtube:"youtube",steam:"steam",kick:"kick",faceit:"faceit"};
 function socIcon(k){var s=SIC[k];return '<span class="ic">'+ico("link")+(s?'<img src="/img/social/'+s+'.svg" data-cdn="https://cdn.jsdelivr.net/npm/simple-icons@11.15.0/icons/'+s+'.svg" alt="" style="position:absolute;inset:0" onload="this.previousSibling&&this.previousSibling.remove()" onerror="if(this.dataset.cdn){this.src=this.dataset.cdn;this.dataset.cdn=\'\'}else{this.remove()}">':'')+'</span>'}
 function vPlayer(p){var t=TB[p.team],x=last(p),vm=(p.vm||"").split(" "),b=p.bob||{},v=p.video||{},h=p.hud||{},r=p.radar||{},g=p.gx||{},a=age(p.birth),isS=p.team==="streamers",S=p.slug;
- document.title=LG()==="ru"?"Прицел "+p.nick+(cyr(p)?" ("+cyr(p)+")":"")+" CS2 2026: код, сенса, настройки и конфиг | CfgPeek":p.nick+" crosshair code & CS2 settings 2026: sens, config, gear | CfgPeek";
+ document.title=LG()==="ru"?"Прицел "+p.nick+(cyr(p)?" ("+cyr(p)+")":"")+" CS2 2026: код, сенса, настройки и конфиг | CfgPeek":TX("{nick} crosshair code & CS2 settings 2026: sens, config, gear | CfgPeek",{nick:p.nick});
  var soc=Object.keys(p.social||{}).map(function(k){var kk=k.toLowerCase();return '<a href="'+esc(p.social[k])+'" target="_blank" rel="noopener noreferrer">'+socIcon(kk)+(SOCN[kk]||k)+'</a>'}).join("");
  var bd=p.birth?(function(){var q=p.birth.split("-");return q[2]+"."+q[1]+"."+q[0]})():null;
  var roleTxt=isS?"стример и контент-мейкер":p.role==="AWP"?"снайпер":p.role==="Капитан"?"капитан":"рифлер";
  var bio=esc(p.nick)+" — "+roleTxt+(isS?"":" "+esc(t.name))+". "+(p.mouse&&p.mouse!=="—"?"Играет на "+esc(p.mouse)+", сенса ":"Сенса ")+p.sens+" при "+p.dpi+" DPI, разрешение "+p.res+" "+esc(p.aspect)+".";
  var facts='<div class="facts">'+(p.name?'<span>Имя <b>'+esc(p.name)+'</b></span>':'')+(bd?'<span>Родился <b>'+bd+(a?" · "+a:"")+'</b></span>':'')+'<span>Страна <b>'+esc(p.country)+'</b></span>'+(isS&&!p.org?'':'<span>'+(isS?"Организация ":"Команда ")+(isS?'<b>'+esc(p.org)+'</b>':'<a href="#t--'+t.slug+'"><b>'+esc(t.name)+'</b></a>')+'</span>')+'<span>Роль <b>'+esc(p.role)+'</b></span></div>';
  var qx='<aside class="qx">'+scene(x,{mini:1,size:120,map:"mirage"})+'<div class="in"><div class="lb">'+(x.code?"Код прицела":"Код прицела недоступен")+'</div>'+(x.code?'<code>'+x.code+'</code>':'')+'<div class="row">'+(x.code?'<button class="btn" data-copy="'+x.code+'">Скопировать</button>':'<a class="btn" href="#p--'+S+'--crosshair">Настройки</a>')+'<button class="btn ghost" data-dl="'+S+'">Скачать конфиг</button></div></div></aside>';
- var head='<section class="hero2"><div class="photo">'+face(p)+'</div><div><h1>'+esc(p.nick)+'<span class="h1s">'+(LG()==="ru"?"прицел, сенса и конфиг CS2"+(cyr(p)?" · "+cyr(p):""):"crosshair, sens & config CS2")+'</span></h1>'+facts+'<p class="bio">'+bio+'</p>'+(soc?'<div class="soc2">'+soc+'</div>':'')+'</div>'+qx+'</section>';
+ var head='<section class="hero2"><div class="photo">'+face(p)+'</div><div><h1>'+esc(p.nick)+'<span class="h1s">'+(LG()==="ru"?"прицел, сенса и конфиг CS2"+(cyr(p)?" · "+cyr(p):""):TX("crosshair, sens & config CS2"))+'</span></h1>'+facts+'<p class="bio">'+bio+'</p>'+(soc?'<div class="soc2">'+soc+'</div>':'')+'</div>'+qx+'</section>';
  var hasL=p.launch&&p.launch!=="не использует";
  var T=[["crosshair","Прицел","cross"],["mouse","Мышь","mouse"],["video","Видео","video"],];if(p.vm)T.push(["viewmodel","Viewmodel","eye"]);if(hasL)T.push(["launch","Параметры запуска","rocket"]);T.push(["hud","HUD и радар","radar"],["gear","Девайсы","keyboard"],["faq","Вопросы","cross"],["mates",isS?"Стримеры":"Тиммейты","team"]);
  var toc='<nav class="toc" aria-label="Разделы страницы"><p>На странице</p>'+T.map(function(q){return '<a href="#p--'+S+'--'+q[0]+'" data-s="'+q[0]+'">'+ico(q[2])+q[1]+'</a>'}).join("")+'</nav>';
@@ -548,6 +548,7 @@ var CYR={"910": "Найн-ван-тен", "aleksib": "Алексиб", "alex666"
 function cyr(p){return CYR[p.slug]||""}
 function cyrGen(n){if(!n)return "";if(/[бвгджзклмнпрстфхцчшщ]$/i.test(n))return n+"а";if(/й$/.test(n))return n.slice(0,-1)+"я";return n}
 function pl(n,a,b,c){var m=n%10,h=n%100;return n+' '+(m===1&&h!==11?a:m>=2&&m<=4&&(h<12||h>14)?b:c)}
+function TX(s,o){var I=window.I18N,r=(I&&I.t&&I.t[s]!=null)?I.t[s]:s;if(o)r=r.replace(/\{(\w+)\}/g,function(_,n){return o[n]!=null?o[n]:"{"+n+"}"});return r}
 function LG(){return (window.__STATIC&&window.__STATIC.lang)||"ru"}
 function med(a){a=a.slice().sort(function(x,y){return x-y});var m=a.length>>1;return a.length%2?a[m]:(a[m-1]+a[m])/2}
 var COLN_EN={"Белый":"white","Жёлтый":"yellow","Голубой":"cyan","Зелёный":"green","Свой цвет":"custom"};
@@ -566,18 +567,23 @@ function seoPlayer(p){var x=last(p),L=LG(),isS=p.team==="streamers",t=TB[p.team]
    ["Какое разрешение у "+who+" в CS2?",p.res+", "+p.aspect+"."],
    ["Как скачать конфиг "+who+"?","Нажмите «Скачать конфиг» вверху страницы. В файле сенса, viewmodel, HUD, радар, код прицела и параметры запуска. Положите его в папку cfg игры и выполните в консоли exec "+p.slug+"_cfgpeek."]];
  }else{
-  txt='<p>'+esc(p.nick)+"'s CS2 crosshair is a "+esc((COLN_EN[x.color]||"custom"))+' '+(x.only?'dot':'cross')+': length '+x.size+', thickness '+x.thick+', gap '+x.gap+(x.dot?', with a center dot':'')+'. '+(sameCol>1?sameCol+' of the '+all.length+' pros in our database use the same color. ':'')+
-   esc(p.nick)+' plays on '+p.sens+' sens at '+p.dpi+' DPI ('+p.edpi+' eDPI), which is '+(p.edpi>me?'above':p.edpi<me?'below':'exactly')+' the pro median of '+me+' eDPI. '+
-   'The resolution is '+p.res+' '+esc(p.aspect)+(sameRes>1?', used by '+sameRes+' pros in our database'+(mates.length?' including '+mates.map(esc).join(", "):''):'')+'.</p>';
-  Q=[["What is "+p.nick+"'s crosshair code in CS2?",x.code?p.nick+"'s crosshair code: "+x.code+". Copy it and paste it in CS2: Settings → Crosshair → Share or Import.":"There is no code in the new format yet. Settings: length "+x.size+", thickness "+x.thick+", gap "+x.gap+", color RGB "+x.rgb.join(", ")+"."],
-   ["What sensitivity does "+p.nick+" use?",p.sens+" at "+p.dpi+" DPI (eDPI "+p.edpi+"), zoom sensitivity "+p.zoom+", "+p.cm+" cm/360°."],
-   ["What resolution does "+p.nick+" play on?",p.res+", "+p.aspect+"."],
-   ["How do I download "+p.nick+"'s config?","Click “Download config” at the top of the page. The file includes sensitivity, viewmodel, HUD, radar, crosshair code and launch options. Put it in the game's cfg folder and run exec "+p.slug+"_cfgpeek in the console."]];
+  var o={nick:p.nick,shape:TX(x.only?"dot":"cross"),color:TX(COLN_EN[x.color]||"custom"),size:x.size,thick:x.thick,gap:x.gap,n:sameCol,all:all.length,sens:p.sens,dpi:p.dpi,edpi:p.edpi,me:me,res:p.res,aspect:p.aspect,code:x.code,rgb:x.rgb.join(", "),zoom:p.zoom,cm:p.cm,slug:p.slug};
+  var st=[TX("{nick}'s CS2 crosshair: {shape}, color {color}, length {size}, thickness {thick}, gap {gap}.",o)];
+  if(x.dot)st.push(TX("There is a dot in the center."));
+  if(sameCol>1)st.push(TX("{n} of the {all} pros in our database use the same color.",o));
+  st.push(TX(p.edpi>me?"{nick} plays on {sens} sens at {dpi} DPI ({edpi} eDPI), above the pro median of {me} eDPI.":p.edpi<me?"{nick} plays on {sens} sens at {dpi} DPI ({edpi} eDPI), below the pro median of {me} eDPI.":"{nick} plays on {sens} sens at {dpi} DPI ({edpi} eDPI), exactly the pro median.",o));
+  var ro={res:p.res,aspect:p.aspect,n:sameRes,list:mates.join(", ")};
+  st.push(TX(sameRes>1?(mates.length?"Resolution: {res} {aspect}, used by {n} pros in our database, including {list}.":"Resolution: {res} {aspect}, used by {n} pros in our database."):"Resolution: {res} {aspect}.",ro));
+  txt='<p>'+esc(st.join(" "))+'</p>';
+  Q=[[TX("What is {nick}'s crosshair code in CS2?",o),x.code?TX("{nick}'s crosshair code: {code}. Copy it and paste it in CS2: Settings → Crosshair → Share or Import.",o):TX("There is no code in the new format yet. Settings: length {size}, thickness {thick}, gap {gap}, color RGB {rgb}.",o)],
+   [TX("What sensitivity does {nick} use?",o),TX("{sens} at {dpi} DPI (eDPI {edpi}), zoom sensitivity {zoom}, {cm} cm/360°.",o)],
+   [TX("What resolution does {nick} play on?",o),p.res+", "+p.aspect+"."],
+   [TX("How do I download {nick}'s config?",o),TX("Click “Download config” at the top of the page. The file includes sensitivity, viewmodel, HUD, radar, crosshair code and launch options. Put it in the game's cfg folder and run exec {slug}_cfgpeek in the console.",o)]];
  }
  var ld={"@context":"https://schema.org","@graph":[
   {"@type":"Person","name":p.nick,"alternateName":[p.name,c].filter(Boolean),"jobTitle":isS?"Streamer":"Professional Counter-Strike 2 player","memberOf":isS||!t?undefined:{"@type":"SportsTeam","name":t.name},"nationality":p.country||undefined},
   {"@type":"FAQPage","mainEntity":Q.map(function(q){return {"@type":"Question","name":q[0],"acceptedAnswer":{"@type":"Answer","text":q[1]}}})}]};
- return '<section class="card2" id="s-faq"><header><h2>'+ico("cross")+(L==="ru"?"Коротко о настройках":"Settings overview")+'</h2></header><div class="seo">'+txt+
+ return '<section class="card2" id="s-faq"><header><h2>'+ico("cross")+(L==="ru"?"Коротко о настройках":TX("Settings overview"))+'</h2></header><div class="seo">'+txt+
   Q.map(function(q){return '<details class="qa"><summary>'+esc(q[0])+'</summary><p>'+esc(q[1])+'</p></details>'}).join("")+'</div>'+
   '<script type="application/ld+json">'+JSON.stringify(ld).replace(/</g,"\\u003c")+'<\/script></section>'}
 
@@ -600,36 +606,36 @@ function convertOld(o,H){var rgb=o.color===5?o.rgb:(PRESET[o.color]||o.rgb);
 function newEncode(c){var b=TPL.slice();b[2]=c.h&255;b[3]=(c.h>>8)&255;b[4]=(c.style&31)|(c.dot<<6)|(c.t<<7);b[5]=c.rgb[0];b[6]=c.rgb[1];b[7]=c.rgb[2];b[8]=c.alpha;
  b[13]=(c.thick&63)|(c.outline<<6);var g=c.gap&65535;b[14]=g&255;b[15]=(g>>8)&255;b[16]=c.length&255;var sum=0;for(var i=1;i<32;i++)sum+=b[i];b[0]=sum%256;return "CS"+b57enc(b,44)}
 function cname(rgb){var r=rgb[0],g=rgb[1],b=rgb[2];if(r>200&&g>200&&b>200)return "Белый";if(r>200&&g>200&&b<120)return "Жёлтый";if(g>180&&b>180&&r<170)return "Голубой";if(g>180&&r<140&&b<200)return "Зелёный";return "Свой цвет"}
-function vConv(){var L=LG();document.title=L==="ru"?"Конвертер прицела CS2: старый код CSGO- в новый после обновления 2026 | CfgPeek":"CS2 crosshair converter: old CSGO- code to the new 2026 format | CfgPeek";
+function vConv(){var L=LG();document.title=L==="ru"?"Конвертер прицела CS2: старый код CSGO- в новый после обновления 2026 | CfgPeek":TX("CS2 crosshair converter: old CSGO- code to the new 2026 format | CfgPeek");
  var ru=L==="ru";
  var faq=ru?[["Почему старый код прицела CSGO- больше не работает?","В сентябре 2026 Valve перевела прицел на пиксели и 30 сентября сменила формат кода: новые коды начинаются с CS и идут без дефисов, старые CSGO- игра не принимает."],
   ["Как вернуть старый прицел в CS2 после обновления?","Вставьте старый код CSGO- в конвертер выше, выберите разрешение, на котором вы играли, скопируйте новый код и импортируйте его: Настройки → Прицел → Поделиться или импортировать."],
   ["Насколько точно совпадёт прицел?","Длина и толщина пересчитываются по старой формуле игры (1/480 высоты экрана), разрыв — по пиксельной формуле старой версии. Обычно результат совпадает или отличается на 1 пиксель; если прицел был динамическим, выберите нужный динамический стиль вручную."]]
-  :[["Why doesn't my old CSGO- crosshair code work anymore?","In September 2026 Valve moved the crosshair to pixels and on 30 September changed the share code format: new codes start with CS and have no dashes, and the game rejects old CSGO- codes."],
-  ["How do I get my old crosshair back after the CS2 update?","Paste your old CSGO- code into the converter above, pick the resolution you played on, copy the new code and import it: Settings → Crosshair → Share or Import."],
-  ["How accurate is the conversion?","Length and thickness are recalculated with the old game formula (1/480 of the screen height) and the gap with the old pixel formula. The result usually matches or differs by 1 pixel; if your crosshair was dynamic, pick the dynamic style manually."]];
+  :[[TX("Why doesn't my old CSGO- crosshair code work anymore?"),TX("In September 2026 Valve moved the crosshair to pixels and on 30 September changed the share code format: new codes start with CS and have no dashes, and the game rejects old CSGO- codes.")],
+  [TX("How do I get my old crosshair back after the CS2 update?"),TX("Paste your old CSGO- code into the converter above, pick the resolution you played on, copy the new code and import it: Settings → Crosshair → Share or Import.")],
+  [TX("How accurate is the conversion?"),TX("Length and thickness are recalculated with the old game formula (1/480 of the screen height) and the gap with the old pixel formula. The result usually matches or differs by 1 pixel; if your crosshair was dynamic, pick the dynamic style manually.")]];
  var res=[[768,"1024×768"],[864,"1152×864"],[960,"1280×960"],[1024,"1280×1024"],[1080,"1920×1080"],[1440,"2560×1440"]];
- return shell(crumbs([["home",ru?"Главная":"Home"],["",ru?"Конвертер прицела":"Crosshair converter"]]),
-  '<div class="pghead"><h1>'+(ru?'Конвертер <span>прицела</span>':'Crosshair <span>converter</span>')+'</h1><p>'+(ru?'Вставьте старый код вида CSGO-xxxxx-xxxxx-…, и получите код в новом формате CS2 после обновления прицелов в сентябре 2026.':'Paste an old CSGO-xxxxx-xxxxx-… code and get a code in the new CS2 format introduced with the September 2026 crosshair update.')+'</p></div>'+
+ return shell(crumbs([["home",ru?"Главная":TX("Home")],["",ru?"Конвертер прицела":TX("Crosshair converter")]]),
+  '<div class="pghead"><h1>'+(ru?'Конвертер <span>прицела</span>':TX('Crosshair <span>converter</span>'))+'</h1><p>'+(ru?'Вставьте старый код вида CSGO-xxxxx-xxxxx-…, и получите код в новом формате CS2 после обновления прицелов в сентябре 2026.':TX('Paste an old CSGO-xxxxx-xxxxx-… code and get a code in the new CS2 format introduced with the September 2026 crosshair update.'))+'</p></div>'+
   '<div class="conv"><div class="box"><div class="bb" style="display:grid;gap:16px">'+
-   '<div class="fld"><label for="oc">'+(ru?'Старый код прицела':'Old crosshair code')+'</label><input class="f" id="oc" placeholder="CSGO-xxxxx-xxxxx-xxxxx-xxxxx-xxxxx" autocomplete="off" spellcheck="false"></div>'+
-   '<div class="fld"><label for="oh">'+(ru?'Разрешение, на котором вы играли':'The resolution you played on')+'</label><select class="f" id="oh">'+res.map(function(r){return '<option value="'+r[0]+'"'+(r[0]===960?' selected':'')+'>'+r[1]+'</option>'}).join("")+'</select></div>'+
-   '<div class="cvmsg" id="cvmsg">'+(ru?'Например, попробуйте старый код s1mple: CSGO-iCxok-KTVNX-shCzf-Evoek-weaAB':'For example, try s1mple\'s old code: CSGO-iCxok-KTVNX-shCzf-Evoek-weaAB')+'</div></div></div>'+
+   '<div class="fld"><label for="oc">'+(ru?'Старый код прицела':TX('Old crosshair code'))+'</label><input class="f" id="oc" placeholder="CSGO-xxxxx-xxxxx-xxxxx-xxxxx-xxxxx" autocomplete="off" spellcheck="false"></div>'+
+   '<div class="fld"><label for="oh">'+(ru?'Разрешение, на котором вы играли':TX('The resolution you played on'))+'</label><select class="f" id="oh">'+res.map(function(r){return '<option value="'+r[0]+'"'+(r[0]===960?' selected':'')+'>'+r[1]+'</option>'}).join("")+'</select></div>'+
+   '<div class="cvmsg" id="cvmsg">'+(ru?'Например, попробуйте старый код s1mple: CSGO-iCxok-KTVNX-shCzf-Evoek-weaAB':TX('For example, try s1mple\'s old code: CSGO-iCxok-KTVNX-shCzf-Evoek-weaAB'))+'</div></div></div>'+
    '<div class="box"><div id="cvout" class="bb"></div></div></div>'+
-  '<section class="card2" style="margin-top:24px"><header><h2>'+ico("cross")+(ru?'Вопросы о новом прицеле':'About the new crosshair')+'</h2></header>'+faq.map(function(q){return '<details class="qa"><summary>'+esc(q[0])+'</summary><p>'+esc(q[1])+'</p></details>'}).join("")+
+  '<section class="card2" style="margin-top:24px"><header><h2>'+ico("cross")+(ru?'Вопросы о новом прицеле':TX('About the new crosshair'))+'</h2></header>'+faq.map(function(q){return '<details class="qa"><summary>'+esc(q[0])+'</summary><p>'+esc(q[1])+'</p></details>'}).join("")+
   '<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":faq.map(function(q){return {"@type":"Question","name":q[0],"acceptedAnswer":{"@type":"Answer","text":q[1]}}})}).replace(/</g,"\\u003c")+'<\/script></section>'+
-  '<section style="margin-top:24px"><div class="h2s"><h2>'+(ru?'Или возьмите прицел профи':'Or take a pro crosshair')+'</h2><a href="#crosshairs">'+(ru?'Все прицелы':'All crosshairs')+'</a></div><div class="cards home-cards">'+D.players.slice(0,4).map(pcard).join("")+'</div></section>')}
+  '<section style="margin-top:24px"><div class="h2s"><h2>'+(ru?'Или возьмите прицел профи':TX('Or take a pro crosshair'))+'</h2><a href="#crosshairs">'+(ru?'Все прицелы':TX('All crosshairs'))+'</a></div><div class="cards home-cards">'+D.players.slice(0,4).map(pcard).join("")+'</div></section>')}
 function convInit(){var i=document.getElementById("oc");if(!i)return;var h=document.getElementById("oh"),out=document.getElementById("cvout"),msg=document.getElementById("cvmsg"),ru=LG()==="ru";
- function run(){var v=i.value.trim();if(!v){out.innerHTML='<p style="margin:0;color:var(--mut)">'+(ru?'Здесь появится новый код и превью.':'The new code and a preview will appear here.')+'</p>';return}
+ function run(){var v=i.value.trim();if(!v){out.innerHTML='<p style="margin:0;color:var(--mut)">'+(ru?'Здесь появится новый код и превью.':TX('The new code and a preview will appear here.'))+'</p>';return}
   var n=newDecode(v),c;
   if(n){c={h:n.h,style:n.style,dyn:false,dot:n.dot,t:n.t,rgb:n.rgb,alpha:n.alpha,thick:n.thick,length:n.length,gap:Math.max(0,n.gap),outline:n.outline};var already=true}
-  else{var o=oldDecode(v);if(!o){out.innerHTML='<div class="nocode"><b>'+(ru?'Код не распознан':'Code not recognized')+'</b>'+(ru?'Проверьте, что код скопирован целиком: CSGO- и пять групп по пять символов.':'Make sure you copied the whole code: CSGO- and five groups of five characters.')+'</div>';return}
+  else{var o=oldDecode(v);if(!o){out.innerHTML='<div class="nocode"><b>'+(ru?'Код не распознан':TX('Code not recognized'))+'</b>'+(ru?'Проверьте, что код скопирован целиком: CSGO- и пять групп по пять символов.':TX('Make sure you copied the whole code: CSGO- and five groups of five characters.'))+'</div>';return}
    c=convertOld(o,+h.value)}
   var code=already?v:newEncode(c),x={size:c.length,gap:c.gap,thick:c.thick,dot:c.dot,only:0,outline:c.outline,alpha:c.alpha,hex:"#"+c.rgb.map(function(z){return ("0"+z.toString(16)).slice(-2)}).join(""),rgb:c.rgb,dyn:0};
-  out.innerHTML=scene(x,{mini:1,size:150,map:"mirage"})+'<div style="margin-top:14px"><div class="lbl">'+(already?(ru?'Это уже код нового формата':'This is already a new-format code'):(ru?'Новый код прицела':'New crosshair code'))+'</div><div class="launch2" style="margin-top:6px"><code>'+code+'</code><button class="btn o" data-copy="'+code+'">'+(ru?'Скопировать':'Copy')+'</button></div>'+
-   '<div class="tbl" style="margin-top:12px">'+[[ru?"Длина":"Length",c.length+" px"],[ru?"Толщина":"Thickness",c.thick+" px"],[ru?"Разрыв":"Gap",c.gap+" px"],[ru?"Цвет":"Color",c.rgb.join(", ")],[ru?"Точка":"Dot",c.dot?(ru?"Да":"Yes"):(ru?"Нет":"No")],[ru?"Обводка":"Outline",c.outline?(ru?"Да":"Yes"):(ru?"Нет":"No")]].map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1]+'</b></div>'}).join("")+'</div>'+
-   (c.dyn?'<p class="cvnote">'+(ru?'Старый прицел был динамическим. Код выставлен как статичный крест: если нужен динамический, смените стиль в настройках прицела.':'Your old crosshair was dynamic. The code uses a static cross; switch the style in the crosshair settings if you want a dynamic one.')+'</p>':'')+
-   '<p class="cvnote">'+(ru?'Консоль: ':'Console: ')+'<code>cl_crosshair_length '+c.length+'; cl_crosshair_thickness '+c.thick+'; cl_crosshair_gap '+c.gap+'</code></p></div>';
+  out.innerHTML=scene(x,{mini:1,size:150,map:"mirage"})+'<div style="margin-top:14px"><div class="lbl">'+(already?(ru?'Это уже код нового формата':TX('This is already a new-format code')):(ru?'Новый код прицела':TX('New crosshair code')))+'</div><div class="launch2" style="margin-top:6px"><code>'+code+'</code><button class="btn o" data-copy="'+code+'">'+(ru?'Скопировать':TX('Copy'))+'</button></div>'+
+   '<div class="tbl" style="margin-top:12px">'+[[ru?"Длина":TX("Length"),c.length+" px"],[ru?"Толщина":TX("Thickness"),c.thick+" px"],[ru?"Разрыв":TX("Gap"),c.gap+" px"],[ru?"Цвет":TX("Color"),c.rgb.join(", ")],[ru?"Точка":TX("Dot"),c.dot?(ru?"Да":TX("Yes")):(ru?"Нет":TX("No"))],[ru?"Обводка":TX("Outline"),c.outline?(ru?"Да":TX("Yes")):(ru?"Нет":TX("No"))]].map(function(r){return '<div><span>'+r[0]+'</span><b>'+r[1]+'</b></div>'}).join("")+'</div>'+
+   (c.dyn?'<p class="cvnote">'+(ru?'Старый прицел был динамическим. Код выставлен как статичный крест: если нужен динамический, смените стиль в настройках прицела.':TX('Your old crosshair was dynamic. The code uses a static cross; switch the style in the crosshair settings if you want a dynamic one.'))+'</p>':'')+
+   '<p class="cvnote">'+(ru?'Консоль: ':TX('Console: '))+'<code>cl_crosshair_length '+c.length+'; cl_crosshair_thickness '+c.thick+'; cl_crosshair_gap '+c.gap+'</code></p></div>';
  }
  i.addEventListener("input",run);h.addEventListener("change",run);msg.addEventListener("click",function(){i.value="CSGO-iCxok-KTVNX-shCzf-Evoek-weaAB";run()});run()}
 
