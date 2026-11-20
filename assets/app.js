@@ -2,7 +2,7 @@
 /* ===== статическая версия: адреса страниц вместо #хэшей ===== */
 function H(){var s=window.__STATIC;return location.hash||(s?"#"+s.page:"")}
 function r2p(h){var s=window.__STATIC;if(!s)return null;var L="/"+s.lang+"/",m=(h||"").replace(/^#/,"").split("--");
- var simple={home:"",crosshairs:"crosshairs/",streamers:"streamers/",configs:"configs/",teams:"teams/",blog:"blog/",converter:"crosshair-converter/"};
+ var simple={home:"",crosshairs:"crosshairs/",streamers:"streamers/",configs:"configs/",teams:"teams/",blog:"blog/",converter:"crosshair-converter/",finder:"settings-finder/"};
  if(m.length===1&&simple.hasOwnProperty(m[0]))return L+simple[m[0]];
  if(m[0]==="p"&&m[1]&&(!m[2]||m[2]==="crosshair"||m[2]==="config"||m[2]==="info"))return L+"players/"+m[1]+"/";
  if(m[0]==="t"&&m[1])return L+"teams/"+m[1]+"/";
@@ -64,7 +64,7 @@ function vHome(){var ps=D.players.slice(),top=ps[0],tx=last(top);
  var avg=Math.round(D.players.reduce(function(s,p){return s+p.edpi},0)/D.players.length),nv=D.players.reduce(function(s,p){return s+p.xhs.length},0);
  document.title="CfgPeek — прицелы и конфиги про-игроков CS2";
  return '<section class="hero"><div class="l"><h1>Прицелы<br><span>профи</span><br>в один клик</h1>'+
- '<p>Коды прицелов с превью, история всех изменений и готовые конфиги про-игроков CS2.</p><div class="acts"><a class="btn k" href="#crosshairs">Все прицелы</a><a class="btn o" style="background:var(--crm)" href="#converter">Конвертер прицела</a></div>'+
+ '<p>Коды прицелов с превью, история всех изменений и готовые конфиги про-игроков CS2.</p><div class="acts"><a class="btn k" href="#crosshairs">Все прицелы</a><a class="btn o" style="background:var(--crm)" href="#converter">Конвертер прицела</a><a class="btn o" style="background:var(--crm)" href="#finder">Подобрать настройки</a><a class="btn o" style="background:var(--crm)" href="#finder">Подобрать настройки</a></div>'+
  '<div class="stats"><div><b>'+D.players.length+'</b><small>игроков</small></div><div><b>'+nv+'</b><small>версий прицелов</small></div><div><b>'+avg+'</b><small>средний eDPI</small></div></div></div>'+
  '<a class="r" href="#p--'+top.slug+'--crosshair">'+scene(tx,{size:180})+'<div class="cap"><b>'+esc(top.nick)+'</b><span>'+esc(TB[top.team].name)+'</span></div></a></section>'+
  '<div class="layout" style="margin-top:28px"><main>'+
@@ -119,8 +119,8 @@ function vCrosshairs(){document.title="Коды прицелов про-игро
  return shell(crumbs([["home","Главная"],["","Прицелы"]]),'<div class="pghead"><h1>Прицелы <span>профи</span></h1><p>Актуальные коды прицелов с превью. Сначала свежие.</p></div><div class="cards">'+ps.map(pcard).join("")+'</div>'+ad("728×90"))}
 function vConfigs(){document.title="Конфиги и настройки про-игроков CS2 2026: сенса, DPI, разрешение | CfgPeek";
  return shell(crumbs([["home","Главная"],["","Конфиги"]]),'<div class="pghead"><h1>Конфиги <span>профи</span></h1><p>Сенса, DPI и разрешение. Нажмите на ник, чтобы открыть полный конфиг.</p></div>'+
- '<div class="tw"><table><thead><tr><th>Игрок</th><th>Команда</th><th>DPI</th><th>Сенса</th><th>eDPI</th><th>Разрешение</th></tr></thead><tbody>'+
- D.players.map(function(p){return '<tr><td><a href="#p--'+p.slug+'--config"><b>'+esc(p.nick)+'</b></a></td><td>'+esc(TB[p.team].name)+'</td><td>'+p.dpi+'</td><td>'+p.sens+'</td><td><b style="color:var(--red)">'+p.edpi+'</b></td><td>'+p.res+' <span style="color:var(--mut)">'+p.aspect+'</span></td></tr>'}).join("")+'</tbody></table></div>')}
+ '<div class="tw"><table><thead><tr><th>Игрок</th><th>Команда</th><th>DPI</th><th>Сенса</th><th>eDPI</th><th>Разрешение</th><th><span class="sr">Конфиг</span></th></tr></thead><tbody>'+
+ D.players.map(function(p){return '<tr><td><a href="#p--'+p.slug+'--config"><b>'+esc(p.nick)+'</b></a></td><td>'+esc(TB[p.team].name)+'</td><td>'+p.dpi+'</td><td>'+p.sens+'</td><td><b style="color:var(--red)">'+p.edpi+'</b></td><td>'+p.res+' <span style="color:var(--mut)">'+p.aspect+'</span></td><td class="dlc"><button type="button" class="btn o dlb" data-dl="'+p.slug+'" aria-label="Скачать конфиг '+esc(p.nick)+'">Скачать</button></td></tr>'}).join("")+'</tbody></table></div>')}
 function vTeams(){document.title="Команды CS2 | CfgPeek";
  return shell(crumbs([["home","Главная"],["","Команды"]]),'<div class="pghead"><h1>Команды</h1></div><div class="two">'+D.teams.map(function(t){return '<a class="box" href="#t--'+t.slug+'"><div class="bb"><span class="chip r">'+t.tag+'</span><h2 class="D" style="font-size:36px;margin:12px 0 6px">'+esc(t.name)+'</h2><span style="color:var(--mut)">'+t.country+', '+D.players.filter(function(p){return p.team===t.slug}).length+' игроков</span></div></a>'}).join("")+'</div>')}
 function vSens(){document.title="Конвертер сенсы CS2: Valorant, Apex, Overwatch 2 | CfgPeek";
@@ -188,7 +188,7 @@ function vCross(p,idx){var x=p.xhs[idx],prev=idx?p.xhs[idx-1]:null,t=TB[p.team],
 function vHome(){var ps=D.players.slice(),top=ps[0],tx=last(top);
  document.title="CfgPeek — прицелы и конфиги про-игроков CS2";
  return '<section class="hero"><div class="l"><h1>Прицелы<br><span>профи</span><br>в один клик</h1>'+
- '<p>Прицелы, сенса и девайсы '+D.players.length+' про-игроков из топ-команд и '+D.streamers.length+' стримеров.</p><div class="acts"><a class="btn k" href="#crosshairs">Все прицелы</a><a class="btn o" href="#converter">Конвертер прицела</a></div></div>'+
+ '<p>Прицелы, сенса и девайсы '+D.players.length+' про-игроков из топ-команд и '+D.streamers.length+' стримеров.</p><div class="acts"><a class="btn k" href="#crosshairs">Все прицелы</a><a class="btn o" href="#converter">Конвертер прицела</a><a class="btn o" href="#finder">Подобрать настройки</a></div></div>'+
  '<a class="r" href="#p--'+top.slug+'--crosshair">'+scene(tx,{size:180})+'<div class="cap"><b>'+esc(top.nick)+'</b><span>'+esc(TB[top.team].name)+'</span></div></a></section>'+
  '<div class="one" style="padding-top:44px"><section><div class="h2s"><h2>Прицелы профи</h2><a href="#crosshairs">Все прицелы</a></div><div class="cards home-cards">'+ps.slice(0,8).map(pcard).join("")+'</div></section>'+ad("728×90","wide")+'</div>'}
 /* ===== v6: блог и блоки главной ===== */
@@ -390,7 +390,7 @@ function vPlayer(p){var t=TB[p.team],x=last(p),vm=(p.vm||"").split(" "),b=p.bob|
  var roleTxt=isS?"стример и контент-мейкер":p.role==="AWP"?"снайпер":p.role==="Капитан"?"капитан":"рифлер";
  var bio=esc(p.nick)+" — "+roleTxt+(isS?"":" "+esc(t.name))+". "+(p.mouse&&p.mouse!=="—"?"Играет на "+esc(p.mouse)+", сенса ":"Сенса ")+p.sens+" при "+p.dpi+" DPI, разрешение "+p.res+" "+esc(p.aspect)+".";
  var facts='<div class="facts">'+(p.name?'<span>Имя <b>'+esc(p.name)+'</b></span>':'')+(bd?'<span>Родился <b>'+bd+(a?" · "+a:"")+'</b></span>':'')+'<span>Страна <b>'+esc(p.country)+'</b></span>'+(isS&&!p.org?'':'<span>'+(isS?"Организация ":"Команда ")+(isS?'<b>'+esc(p.org)+'</b>':'<a href="#t--'+t.slug+'"><b>'+esc(t.name)+'</b></a>')+'</span>')+'<span>Роль <b>'+esc(p.role)+'</b></span></div>';
- var qx='<aside class="qx">'+scene(x,{mini:1,size:120,map:"mirage"})+'<div class="in"><div class="lb">'+(x.code?"Код прицела":"Код прицела недоступен")+'</div>'+(x.code?'<code>'+x.code+'</code>':'')+'<div class="row">'+(x.code?'<button class="btn" data-copy="'+x.code+'">Скопировать</button>':'<a class="btn" href="#p--'+S+'--crosshair">Настройки</a>')+'<button class="btn ghost" data-dl="'+S+'">Скачать конфиг</button></div></div></aside>';
+ var qx='<aside class="qx">'+scene(x,{mini:1,size:120,map:"mirage"})+'<div class="in"><div class="lb">'+(x.code?"Код прицела":"Код прицела недоступен")+'</div>'+(x.code?'<code>'+x.code+'</code>':'')+'<div class="row">'+(x.code?'<button class="btn" data-copy="'+x.code+'">Скопировать</button>':'<a class="btn" href="#p--'+S+'--crosshair">Настройки</a>')+'<button class="btn ghost" data-dl="'+S+'">Скачать конфиг</button></div><button type="button" class="btn ghost shbtn" data-goto="s-share">Поделиться картинкой</button></div></aside>';
  var head='<section class="hero2"><div class="photo">'+face(p)+'</div><div><h1>'+esc(p.nick)+'<span class="h1s">'+(LG()==="ru"?"прицел, сенса и конфиг CS2"+(cyr(p)?" · "+cyr(p):""):TX("crosshair, sens & config CS2"))+'</span></h1>'+facts+'<p class="bio">'+bio+'</p>'+(soc?'<div class="soc2">'+soc+'</div>':'')+'</div>'+qx+'</section>';
  var hasL=p.launch&&p.launch!=="не использует";
  var T=[["crosshair","Прицел","cross"],["mouse","Мышь","mouse"],["video","Видео","video"],];if(p.vm)T.push(["viewmodel","Viewmodel","eye"]);if(hasL)T.push(["launch","Параметры запуска","rocket"]);T.push(["hud","HUD и радар","radar"],["gear","Девайсы","keyboard"],["faq","Вопросы","cross"],["mates",isS?"Стримеры":"Тиммейты","team"]);
@@ -663,7 +663,7 @@ var _vTeam=vTeam;vTeam=function(t){var s=_vTeam(t),k=s.indexOf('<div class="tw"'
 
 /* ===== v26: матчи, форма, карты и соперники команды (data/live.json из PandaScore) ===== */
 var LIVE=null;
-try{fetch("/data/live.json").then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.teams){LIVE=j;var app=document.getElementById("app");if(app&&/^#?t--/.test(H()||"")){app.dataset.p="";route()}}}).catch(function(){})}catch(e){}
+try{fetch("/data/live.json").then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.teams){LIVE=j;var app=document.getElementById("app");if(app&&/^#?(t|p)--/.test(H()||"")){app.dataset.p="";route()}}}).catch(function(){})}catch(e){}
 function dmy(s){if(!s)return "";var d=new Date(s);return ("0"+d.getUTCDate()).slice(-2)+"."+("0"+(d.getUTCMonth()+1)).slice(-2)+"."+d.getUTCFullYear()}
 function tname(m){var l=m.league||"",s=(m.serie||"").replace(/\s*20\d\d$/,"");var y=(m.at||"").slice(0,4);return (l+(s&&s.toLowerCase()!==l.toLowerCase()?" "+s:"")+(y?" "+y:"")).trim()||m.tour||""}
 function tLive(t){var x=LIVE&&LIVE.teams&&LIVE.teams[t.slug];if(!x)return "";var ru=LG()==="ru",L=function(r,e,o){return ru?r.replace(/\{(\w+)\}/g,function(_,n){return o[n]}):TX(e,o)};
@@ -797,12 +797,89 @@ function ecalc(){var d=document.getElementById("ec-d");if(!d||d.dataset.on)retur
   var c=D.players.slice().sort(function(a,b){return Math.abs(a.edpi-e)-Math.abs(b.edpi-e)}).slice(0,3);document.getElementById("ec-p").innerHTML=c.map(function(p){return '<a href="'+(window.__STATIC?r2p("#p--"+p.slug):"#p--"+p.slug)+'">'+esc(p.nick)+'</a> ('+p.edpi+')'}).join(", ")}
  d.addEventListener("input",run);s.addEventListener("input",run);run()}
 new MutationObserver(function(){ecalc()}).observe(document.documentElement,{childList:true,subtree:true});
+
+
+
+/* ===== v30: матчи команды и карточка «Поделиться» на странице игрока ===== */
+function pMatches(p){var x=LIVE&&LIVE.teams&&LIVE.teams[p.team];if(!x)return "";var ru=LG()==="ru",L=function(r,e,o){return ru?r.replace(/\{(\w+)\}/g,function(_,n){return o[n]}):TX(e,o)};
+ var P=(x.past||[]).filter(function(m){return m.st==="finished"&&m.win!=null&&m.us!=null}),N=x.next||[],t=TB[p.team]||{name:p.team};if(!P.length&&!N.length)return "";
+ var W=P.slice(0,20).filter(function(m){return m.win}).length,n=Math.min(20,P.length);
+ var row=function(m,fut){return '<li class="'+(fut?"":m.win?"w":"l")+'"><time>'+dmy(m.at)+'</time><b>'+esc(m.opp||"TBD")+'</b><span class="tl-s">'+(fut?"BO"+(m.bo||"?"):m.us+":"+m.them)+'</span><small>'+esc(tname(m))+'</small></li>'};
+ return '<section class="card2" id="s-matches"><header><h2>'+ico("cross")+L("Матчи {t}","{t} matches",{t:esc(t.name)})+'</h2><small>'+L("{w} побед в {n} последних матчах","{w} wins in the last {n} matches",{w:W,n:n})+'</small></header>'+
+  '<div class="tl-g">'+(N.length?'<div><h3>'+L("Ближайшие матчи","Upcoming matches",{})+'</h3><ul class="tl-m">'+N.slice(0,3).map(function(m){return row(m,1)}).join("")+'</ul></div>':"")+
+  '<div><h3>'+L("Последние матчи","Recent matches",{})+'</h3><ul class="tl-m">'+P.slice(0,5).map(function(m){return row(m,0)}).join("")+'</ul><p class="tl-more"><a href="#t--'+p.team+'">'+L("Все матчи и статистика команды","All team matches and stats",{})+' →</a></p></div></div></section>'}
+function pShare(p){var ru=LG()==="ru",L=function(r,e){return ru?r:TX(e)};
+ return '<section class="card2" id="s-share"><header><h2>'+ico("cross")+L("Поделиться настройками","Share the settings")+'</h2><small>'+L("Картинка с прицелом и сенсой для Telegram, Instagram и X","An image with the crosshair and sens for Telegram, Instagram and X")+'</small></header>'+
+  '<div class="shr"><canvas id="shc" data-slug="'+p.slug+'" width="1080" height="1080"></canvas><div class="shr-c"><div class="shr-f" role="group" aria-label="'+L("Формат","Format")+'">'+
+  [["1080x1080",L("Квадрат","Square")],["1200x675",L("Пост","Post")],["1080x1920",L("Сторис","Story")]].map(function(f,i){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(i?"false":"true")+'">'+f[1]+'<small>'+f[0].replace("x","×")+'</small></button>'}).join("")+
+  '</div><button type="button" class="btn" id="sh-dl">'+L("Скачать картинку","Download image")+'</button><button type="button" class="btn ghost" id="sh-sh">'+L("Поделиться","Share")+'</button><button type="button" class="btn ghost" id="sh-ln">'+L("Скопировать ссылку","Copy link")+'</button></div></div></section>'}
+(function(){var _seo=seoPlayer;seoPlayer=function(p){return pMatches(p)+pShare(p)+_seo(p)}})();
+function drawXh(c,x,cx,cy,k){var col="rgb("+x.rgb.join(",")+")",T=Math.max(1,x.thick)*k,G=x.gap*k,S=x.size*k;
+ function r(a,b,w,h){if(x.outline){c.fillStyle="#000";c.fillRect(a-k,b-k,w+2*k,h+2*k)}c.fillStyle=col;c.fillRect(a,b,w,h)}
+ if(S>0&&!x.only){r(cx-T/2,cy-G-T/2-S,T,S);r(cx-T/2,cy+G+T/2,T,S);r(cx-G-T/2-S,cy-T/2,S,T);r(cx+G+T/2,cy-T/2,S,T)}
+ if(x.dot||x.only||S===0)r(cx-T/2,cy-T/2,T,T)}
+var SHIMG={};function shImg(src,cb){if(SHIMG[src]&&SHIMG[src].complete)return cb(SHIMG[src]);var i=new Image();i.onload=function(){cb(i)};i.onerror=function(){cb(i)};i.src=src;SHIMG[src]=i}
+function shDraw(){var cv=document.getElementById("shc");if(!cv)return;var p=PB[cv.dataset.slug];if(!p)return;var x=last(p),W=cv.width,Hh=cv.height,c=cv.getContext("2d"),ru=LG()==="ru",t=TB[p.team]||{name:""};
+ var map="/img/"+MAPS[hsh(p.slug)%5][0]+".jpg";
+ shImg(map,function(im){c.fillStyle="#efe6d0";c.fillRect(0,0,W,Hh);var tall=Hh>W,wide=W>Hh*1.4,u=Math.min(W,Hh)/1080;
+  c.save();c.fillStyle="#d4231c";c.translate(W*.78,-Hh*.05);c.rotate(.24);c.fillRect(0,0,W*.6,Hh*1.4);c.restore();
+  var pad=60*u;c.fillStyle="#141210";c.fillRect(pad,pad,260*u,70*u);c.font="700 "+(48*u)+"px Oswald, Arial Narrow, sans-serif";c.textBaseline="middle";c.fillStyle="#efe6d0";c.fillText("CFG",pad+18*u,pad+36*u);var cw=c.measureText("CFG").width;c.fillStyle="#d4231c";c.fillText("PEEK",pad+18*u+cw,pad+36*u);
+  var nfs=(wide?120:150)*u;c.font="700 "+nfs+"px Oswald, Arial Narrow, sans-serif";c.fillStyle="#141210";c.textBaseline="alphabetic";var ny=pad+70*u+nfs*1.0;c.fillText(p.nick.toUpperCase(),pad,ny);
+  c.font="500 "+(34*u)+"px Rubik, Arial, sans-serif";c.fillStyle="#5a5040";c.fillText((t.name||"")+" · "+(ru?"прицел и настройки CS2":TX("crosshair and CS2 settings")),pad,ny+48*u);
+  var mx,my,mw,mh;if(wide){mw=W*.42;mh=mw*9/16;mx=W-mw-pad;my=pad+40*u}else{mw=W-2*pad;mh=mw*(tall?.66:.40);mx=pad;my=ny+80*u}
+  c.fillStyle="#141210";c.fillRect(mx+14*u,my+14*u,mw,mh);if(im.naturalWidth){var ir=im.width/im.height,sw=im.width,sh=im.height;if(ir>mw/mh){sw=im.height*mw/mh}else{sh=im.width*mh/mw}c.drawImage(im,(im.width-sw)/2,(im.height-sh)/2,sw,sh,mx,my,mw,mh)}else{c.fillStyle="#3a4048";c.fillRect(mx,my,mw,mh)}c.strokeStyle="#141210";c.lineWidth=8*u;c.strokeRect(mx,my,mw,mh);
+  drawXh(c,x,mx+mw/2,my+mh/2,Math.max(3,Math.round(4*u*(wide?.9:1))));var zs=mh*.42,zx=mx+mw-zs-14*u,zy=my+mh-zs-14*u;c.fillStyle="rgba(20,18,16,.88)";c.fillRect(zx,zy,zs,zs);c.strokeStyle="#efe6d0";c.lineWidth=3*u;c.strokeRect(zx,zy,zs,zs);c.fillStyle="#efe6d0";c.font="700 "+(16*u)+"px Oswald, Arial Narrow, sans-serif";c.fillText("ZOOM ×4",zx+10*u,zy+24*u);drawXh(c,x,zx+zs/2,zy+zs/2+8*u,Math.max(6,Math.round(zs/(2*(x.size+x.gap+x.thick+4)))));
+  var st=[["DPI",p.dpi],[ru?"СЕНСА":"SENS",p.sens],["eDPI",p.edpi],[ru?"РАЗРЕШЕНИЕ":"RES",p.res]];if(tall)st=st.concat([[ru?"ДЛИНА":"LENGTH",x.size],[ru?"ТОЛЩИНА":"THICKNESS",x.thick],[ru?"РАЗРЫВ":"GAP",x.gap],[ru?"ФОРМАТ":"ASPECT",p.aspect||""]]);var by=wide?ny+90*u:my+mh+(tall?50:40)*u,bx=pad,bw=wide?(W*.5-pad-30*u)/2:(W-2*pad-(tall?10:30)*u)/(tall?2:4),bh=(wide||tall?110:100)*u;
+  st.forEach(function(s,i){var col=wide||tall?i%2:i,row=wide||tall?Math.floor(i/2):0,X=bx+col*(bw+10*u),Y=by+row*(bh+10*u);c.fillStyle=i===2?"#141210":"#e6dcc4";c.fillRect(X,Y,bw,bh);c.fillStyle=i===2?"#b8ad96":"#5a5040";c.font="500 "+(24*u)+"px Rubik, Arial, sans-serif";c.fillText(s[0],X+18*u,Y+38*u);c.fillStyle=i===2?"#efe6d0":"#141210";c.font="700 "+((String(s[1]).length>9?34:46)*u)+"px Oswald, Arial Narrow, sans-serif";c.fillText(String(s[1]),X+18*u,Y+(wide||tall?90:84)*u)});
+  var cy2=Hh-pad-20*u;if(x.code){c.fillStyle="#141210";c.fillRect(pad,cy2-62*u,W-2*pad,70*u);c.fillStyle="#e8c63a";c.font="500 "+((wide?24:26)*u)+"px ui-monospace, Consolas, monospace";c.fillText(x.code,pad+18*u,cy2-18*u)}
+  c.fillStyle="#141210";c.font="700 "+(30*u)+"px Oswald, Arial Narrow, sans-serif";c.textAlign="right";c.fillText("CFGPEEK.COM",W-pad,x.code?cy2-84*u:cy2);c.textAlign="left"})}
+function shInit(){var cv=document.getElementById("shc");if(!cv||cv.dataset.on)return;cv.dataset.on=1;var go=function(){shDraw()};(document.fonts&&document.fonts.ready?document.fonts.ready.then(go):go());
+ var url=function(){return location.origin+(window.__STATIC?location.pathname:"/")};
+ document.querySelectorAll(".shr-f button").forEach(function(b){b.addEventListener("click",function(){var f=b.dataset.f.split("x");cv.width=+f[0];cv.height=+f[1];document.querySelectorAll(".shr-f button").forEach(function(o){o.setAttribute("aria-pressed",o===b?"true":"false")});shDraw()})});
+ var name=function(){return "cfgpeek-"+cv.dataset.slug+"-"+cv.width+"x"+cv.height+".png"};
+ document.getElementById("sh-dl").addEventListener("click",function(){cv.toBlob(function(bl){var a=document.createElement("a");a.href=URL.createObjectURL(bl);a.download=name();document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)})});
+ document.getElementById("sh-sh").addEventListener("click",function(){cv.toBlob(function(bl){var f=new File([bl],name(),{type:"image/png"}),d={files:[f],title:"CfgPeek",url:url()};if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share(d).catch(function(){});else if(navigator.share)navigator.share({title:"CfgPeek",url:url()}).catch(function(){});else document.getElementById("sh-dl").click()})});
+ document.getElementById("sh-ln").addEventListener("click",function(){var b=this;try{navigator.clipboard.writeText(url()).then(function(){var t=b.textContent;b.textContent=LG()==="ru"?"Ссылка скопирована":TX("Link copied");setTimeout(function(){b.textContent=t},1500)})}catch(e){}})}
+new MutationObserver(function(){shInit()}).observe(document.documentElement,{childList:true,subtree:true});
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-goto]");if(!b)return;var el=document.getElementById(b.dataset.goto);if(el){e.preventDefault();window.scrollTo({top:el.getBoundingClientRect().top+scrollY-90,behavior:"smooth"})}});
 function H(){var s=window.__STATIC;return location.hash||(s?"#"+s.page:"")}
 var _routeC=route;route=function(){var h=(H()||"").slice(1);if(h==="converter"||h==="sens"){if(h==="sens"&&!window.__STATIC){location.replace("#converter");return}
  document.getElementById("app").innerHTML=vConv();document.getElementById("app").dataset.p="";
  var links=NAV.map(function(n){return '<a href="#'+n[0]+'" class="'+(n[0]==="converter"?"on":"")+'">'+n[1]+'</a>'}).join("");
  document.getElementById("nav").innerHTML=links;document.getElementById("dnav").innerHTML=links;closeD();window.scrollTo(0,0);convInit();return}
  _routeC()};
+
+
+/* ===== v31: «Подбери настройки профи» ===== */
+function vFinder(){var ru=LG()==="ru",L=function(r,e){return ru?r:TX(e)};
+ document.title=ru?"Подбери настройки профи CS2: тест на 5 вопросов | CfgPeek":TX("Find your CS2 pro settings: a 5-question quiz | CfgPeek");
+ var Q=[["role",L("Ваша роль","Your role"),[["any",L("Любая","Any")],["Рифлер",L("Рифлер","Rifler")],["AWP",L("Снайпер","AWPer")],["Капитан",L("Капитан","IGL")]]],
+  ["sens",L("Ваша сенса","Your sens"),[["low",L("Низкая (до 700 eDPI)","Low (under 700 eDPI)")],["mid",L("Средняя (700–1000)","Medium (700–1000)")],["high",L("Высокая (больше 1000)","High (over 1000)")],["exact",L("Знаю точно","I know mine")]]],
+  ["asp",L("Формат экрана","Aspect ratio"),[["stretch",L("4:3 растянутый","4:3 stretched")],["bars",L("4:3 с полосами","4:3 black bars")],["wide",L("16:9 или 16:10","16:9 or 16:10")],["any",L("Не важно","Doesn't matter")]]],
+  ["size",L("Размер прицела","Crosshair size"),[["dot",L("Точка","Dot")],["small",L("Маленький","Small")],["mid",L("Средний","Medium")],["big",L("Крупный","Large")]]],
+  ["col",L("Цвет прицела","Crosshair color"),[["Зелёный",L("Зелёный","Green")],["Голубой",L("Голубой","Cyan")],["Жёлтый",L("Жёлтый","Yellow")],["Белый",L("Белый","White")],["any",L("Любой","Any")]]]];
+ var form='<form class="fnd" id="fnd" onsubmit="return false">'+Q.map(function(q,i){return '<fieldset><legend><em>'+(i+1)+'</em>'+q[1]+'</legend><div class="fnd-o">'+q[2].map(function(o,j){return '<label><input type="radio" name="'+q[0]+'" value="'+o[0]+'"'+(({role:"any",sens:"mid",asp:"any",size:"small",col:"any"})[q[0]]===o[0]?" checked":"")+'><span>'+o[1]+'</span></label>'}).join("")+'</div>'+
+  (q[0]==="sens"?'<div class="fnd-ex" id="fnd-ex" hidden><label>DPI<input type="number" name="dpi" value="800" min="50" inputmode="numeric"></label><label>'+L("Сенса","Sens")+'<input type="number" name="sv" value="1.1" step="0.01" min="0.01" inputmode="decimal"></label></div>':"")+'</fieldset>'}).join("")+'</form>';
+ return shell(crumbs([["home","Главная"],["",L("Подбор настроек","Settings finder")]]),'<div class="pghead"><h1>'+L("Подбери <span>настройки</span>","Find your <span>settings</span>")+'</h1><p>'+L("Ответьте на пять вопросов, и мы покажем про-игроков с самыми похожими настройками: прицел, сенса и разрешение.","Answer five questions and we'll show the pros whose crosshair, sens and resolution are closest to yours.")+'</p></div>'+
+  '<div class="fnd-w">'+form+'<div class="fnd-r"><h2>'+L("Ваши профи","Your pros")+'</h2><div id="fnd-out"></div></div></div>')}
+function fndScore(p,a){var x=last(p),s=0,m=0;
+ m+=20;if(a.role==="any"||p.role===a.role)s+=20;
+ m+=35;var e=p.edpi,tg=a.sens==="low"?550:a.sens==="high"?1300:a.sens==="exact"?a.edpi:850;s+=35*Math.max(0,1-Math.abs(e-tg)/(tg*.8));
+ m+=15;var asp=p.aspect||"";if(a.asp==="any"||(a.asp==="stretch"&&/stretch/.test(asp))||(a.asp==="bars"&&/black/.test(asp))||(a.asp==="wide"&&/16:/.test(asp)))s+=15;
+ m+=20;var sz=x.size,want=a.size==="dot"?0:a.size==="small"?2:a.size==="mid"?4:7;s+=20*Math.max(0,1-Math.abs(sz-want)/5);
+ m+=10;if(a.col==="any"||x.color===a.col)s+=10;
+ return Math.round(100*s/m)}
+function fndRun(){var f=document.getElementById("fnd");if(!f)return;var g=function(n){var e=f.querySelector('input[name="'+n+'"]:checked');return e?e.value:""};
+ var a={role:g("role"),sens:g("sens"),asp:g("asp"),size:g("size"),col:g("col")};document.getElementById("fnd-ex").hidden=a.sens!=="exact";
+ if(a.sens==="exact"){a.edpi=Math.max(50,(+f.dpi.value||800)*(+f.sv.value||1))}
+ var r=D.players.map(function(p){return [p,fndScore(p,a)]}).sort(function(x,y){return y[1]-x[1]}).slice(0,6),ru=LG()==="ru";
+ document.getElementById("fnd-out").innerHTML='<div class="fnd-list">'+r.map(function(q,i){var p=q[0],x=last(p);return '<a class="fnd-i" href="'+(window.__STATIC?r2p("#p--"+p.slug):"#p--"+p.slug)+'"><span class="fnd-pc">'+q[1]+'%</span><span class="xr-pv" style="background-image:url('+(window.__STATIC?"/":"")+'img/'+MAPS[i%5][0]+'.jpg)">'+xhSvg(x,40)+'</span><span class="fnd-n"><b>'+esc(p.nick)+'</b><small>'+esc((TB[p.team]||{}).name||"")+' · '+p.edpi+' eDPI · '+esc(p.res)+'</small></span></a>'}).join("")+'</div>'+
+  (r[0]&&last(r[0][0]).code?'<div class="fnd-best"><small>'+(ru?"Код прицела ":TX("Crosshair code")+" ")+esc(r[0][0].nick)+'</small><code>'+esc(last(r[0][0]).code)+'</code><button class="btn" data-copy="'+esc(last(r[0][0]).code)+'">'+(ru?"Скопировать":TX("Copy"))+'</button></div>':"")}
+function fndInit(){var f=document.getElementById("fnd");if(!f||f.dataset.on)return;f.dataset.on=1;f.addEventListener("input",fndRun);f.addEventListener("change",fndRun);fndRun()}
+new MutationObserver(function(){fndInit()}).observe(document.documentElement,{childList:true,subtree:true});
+var _routeF=route;route=function(){var h=(H()||"").slice(1);if(h==="finder"){document.getElementById("app").innerHTML=vFinder();document.getElementById("app").dataset.p="";
+ var links=NAV.map(function(n){return '<a href="#'+n[0]+'">'+n[1]+'</a>'}).join("");document.getElementById("nav").innerHTML=links;document.getElementById("dnav").innerHTML=links;closeD();window.scrollTo(0,0);fndInit();return}
+ _routeF()};
 
 var LN={ru:"Русский",en:"English",pt:"Português",es:"Español",de:"Deutsch",pl:"Polski",tr:"Türkçe",fr:"Français",uk:"Українська",zh:"中文"};
 function langBar(){var s=window.__STATIC;if(!s||!s.langs||s.langs.length<2)return;var path=location.pathname.replace(/^\/[a-z]{2}\//,"/");
