@@ -898,6 +898,27 @@ var CMAP={"Brazil": "Бразилия", "Russia": "Россия", "Denmark": "Д
 
 
 
+
+/* ===== v34: настройки коротких профилей из data/csconfig.json ===== */
+var CSC={};
+try{fetch("/data/csconfig.json").then(function(r){return r.ok?r.json():{}}).then(function(j){CSC=j||{};var app=document.getElementById("app");if(app&&/^#?p--/.test(H()||"")){app.dataset.p="";route()}}).catch(function(){})}catch(e){}
+function cscX(c){var n=c&&newDecode(c);if(!n)return null;var hex="#"+n.rgb.map(function(z){return ("0"+z.toString(16)).slice(-2)}).join("");return {size:n.length,gap:Math.max(0,n.gap),thick:n.thick,dot:n.dot,only:0,outline:n.outline,alpha:n.alpha,hex:hex,rgb:n.rgb,color:cname(n.rgb),dyn:0,code:c}}
+(function(){var _vl2=vLite;vLite=function(q){var h=_vl2(q),c=CSC[q.slug];if(!c)return h;var ru=LG()==="ru",L=function(r,e){return ru?r:TX(e)},P=c.params||{},x=cscX(c.code);
+ var row=function(a){return a[1]?'<div><span>'+a[0]+'</span><b>'+esc(a[1])+'</b></div>':''};
+ var dpi=+P["DPI"]||0,sens=+(P["Чувствительность мыши в игре"]||0),edpi=dpi&&sens?Math.round(dpi*sens):"";
+ var b='<div class="lt-set">';
+ if(x)b+='<section class="card2" id="s-crosshair"><header><h2>'+ico("cross")+"Прицел"+'</h2></header><div class="lt-x"><div class="mapsgrid">'+[["mirage","Mirage"],["ancient","Ancient"]].map(function(m){return '<figure><figcaption>'+m[1]+'</figcaption>'+scene(x,{mini:1,size:120,map:m[0]})+'</figure>'}).join("")+'</div><div><div class="lb">'+"Код прицела"+'</div><div class="launch2"><code>'+x.code+'</code><button class="btn" data-copy="'+x.code+'">'+"Скопировать"+'</button></div><div class="tbl">'+[["Длина",x.size],["Толщина",x.thick],["Разрыв",x.gap],["Цвет",x.color+" · "+x.rgb.join(", ")],["Точка",x.dot?("Да"):("Нет")],["Обводка",x.outline?("Да"):("Нет")]].map(row).join("")+'</div></div></div></section>';
+ b+='<section class="card2" id="s-mouse"><header><h2>'+ico("mouse")+"Мышь"+'</h2></header><div class="tbl">'+[["DPI",P["DPI"]],["Сенса",P["Чувствительность мыши в игре"]],["eDPI",edpi],["Зум-сенса",P["Чувствительность мыши в зуме"]],["Частота опроса",P["Частота мыши"]],["Сенса Windows",P["Чувствительность мыши в Windows"]]].map(row).join("")+'</div></section>';
+ b+='<section class="card2" id="s-video"><header><h2>'+ico("monitor")+"Видео"+'</h2></header><div class="tbl">'+[["Разрешение",(P["Разрешение"]||"").replace(" x ","×")],["Формат",P["Соотношение сторон"]],["Масштабирование",P["Формат изображения"]],["Частота монитора",P["Частота обновления"]]].map(row).join("")+'</div></section>';
+ if(c.vm)b+='<section class="card2" id="s-viewmodel"><header><h2>'+ico("eye")+'Viewmodel</h2></header><div class="launch2"><code>'+esc(c.vm)+'</code><button class="btn o" data-copy="'+esc(c.vm)+'">'+"Скопировать"+'</button></div></section>';
+ if(c.launch)b+='<section class="card2" id="s-launch"><header><h2>'+ico("rocket")+"Параметры запуска"+'</h2></header><div class="launch2"><code>'+esc(c.launch)+'</code><button class="btn o" data-copy="'+esc(c.launch)+'">'+"Скопировать"+'</button></div></section>';
+ b+='<p class="lt-src">'+(ru?"Источник настроек: ":TX("Settings source")+": ")+'<a href="'+esc(c.url)+'" target="_blank" rel="noopener">cs-config.com</a></p></div>';
+ var ld=x?'<i data-rich="1" hidden></i>':'';
+ h=h.replace(/<div class="lite-note">[\s\S]*?<\/div>/,"");
+ if(x)document.title=(ru?"Прицел "+q.nick+" CS2: код прицела, сенса и настройки | CfgPeek":TX("{nick} CS2 crosshair code, sens and settings | CfgPeek",{nick:q.nick}));
+ var k=h.indexOf('<section class="lt-sec">');if(k<0)k=h.indexOf('<section><div class="h2s">');
+ return (k<0?h+b:h.slice(0,k)+b+h.slice(k))+ld}})();
+
 var LN={ru:"Русский",en:"English",pt:"Português",es:"Español",de:"Deutsch",pl:"Polski",tr:"Türkçe",fr:"Français",uk:"Українська",zh:"中文"};
 function langBar(){var s=window.__STATIC;if(!s||!s.langs||s.langs.length<2)return;var path=location.pathname.replace(/^\/[a-z]{2}\//,"/");
  var h='<nav class="langs" aria-label="Language">'+s.langs.map(function(l){return '<a href="/'+l+path+'" hreflang="'+l+'"'+(l===s.lang?' aria-current="true"':'')+'>'+(LN[l]||l)+'</a>'}).join("")+'</nav>';
