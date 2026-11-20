@@ -210,7 +210,7 @@ function bigSil(){return '<svg viewBox="0 0 100 100" aria-hidden="true"><circle 
 function duo(){var best=D.players.slice().sort(function(a,b){return b.xhs.length-a.xhs.length})[0];
  var tr=D.teams.map(function(t){var ro=D.players.filter(function(p){return p.team===t.slug});
   return '<div class="trow"><span class="lg">'+t.tag+tlogo(t)+'</span><a class="nm" href="#t--'+t.slug+'"><b>'+esc(t.name)+'</b><small>'+esc(t.country)+' · '+ro.length+' игроков</small></a><span class="roster">'+ro.map(function(p){return '<a href="#p--'+p.slug+'--crosshair" title="'+esc(p.nick)+'" aria-label="'+esc(p.nick)+'">'+rAva(p)+'</a>'}).join("")+'</span></div>'}).join("");
- return '<section class="duo"><div><div class="h2s"><h2>Лучший конфиг</h2></div><a class="best" href="#p--'+best.slug+'--config"><span class="ph"><span class="stamp">Выбор редакции</span>'+face(best)+'</span><span class="bar"><b>'+esc(best.nick)+'</b><span>'+esc(TB[best.team].name)+'</span></span><span class="cfg"><div><span>eDPI</span><b>'+best.edpi+'</b></div><div><span>Сенса</span><b>'+best.sens+'</b></div><div><span>DPI</span><b>'+best.dpi+'</b></div><div><span>Разрешение</span><b>'+best.res+'</b></div></span></a></div>'+
+ return '<section class="duo"><div><div class="h2s"><h2>Лучший конфиг</h2></div><a class="best" href="#p--'+best.slug+'--config"><span class="ph"><span class="stamp">Выбор редакции</span>'+face(best)+'<span class="bx">'+scene(last(best),{mini:1,size:220,map:MAPS[0][0]})+'</span></span><span class="bar"><b>'+esc(best.nick)+'</b><span>'+esc(TB[best.team].name)+'</span></span><span class="cfg"><div><span>eDPI</span><b>'+best.edpi+'</b></div><div><span>Сенса</span><b>'+best.sens+'</b></div><div><span>DPI</span><b>'+best.dpi+'</b></div><div><span>Разрешение</span><b>'+best.res+'</b></div></span></a></div>'+
  '<div><div class="h2s"><h2>Команды</h2><a href="#teams">Все команды</a></div><div class="teams">'+tr+'</div></div></section>'}
 var _vHome=vHome;
 vHome=function(){var h=_vHome();var blog='<section><div class="h2s"><h2>Блог</h2><a href="#blog">Все статьи</a></div><div class="blog">'+POSTS.map(postCard).join("")+'</div></section>';
@@ -494,7 +494,7 @@ try{fetch("/data/profiles.json").then(function(r){return r.ok?r.json():[]}).then
   if(LITEA.length){var h=H().slice(1);if(h==="crosshairs"||h.indexOf("p--")===0)route()}}).catch(function(){})}catch(e){}
 
 /* ===== v13: лицо игрока = фото (img/players) поверх аватарки Twitch поверх плаката ===== */
-var TW={},CUT={};
+var TW={},CUT={"wicadia": 1, "fallen": 1, "molodoy": 1, "yuurih": 1, "kscerato": 1, "yekindar": 1, "naf": 1, "elige": 1, "malbsmd": 1, "spinx": 1, "xertion": 1, "torzsi": 1, "pr": 1, "xelex": 1, "sh1ro": 1, "magixx": 1, "tn1r": 1, "zont1x": 1, "donk": 1, "apex": 1, "ropz": 1, "zywoo": 1, "flamez": 1, "mezii": 1, "jl": 1, "woxic": 1, "jimpphat": 1, "kyxsan": 1, "karrigan": 1, "niko": 1, "teses": 1, "m0nesy": 1, "kyousuke": 1, "s1ren": 1, "boombl4": 1, "zorte": 1, "d1ledez": 1, "magnojez": 1, "aleksib": 1, "im": 1, "b1t": 1, "w0nderful": 1, "makazze": 1, "sunpayus": 1, "dem0n": 1, "krabeni": 1, "nertz": 1, "heavygod": 1, "matys": 1, "hunter-": 1, "blitz": 1, "techno": 1, "910": 1, "fl1t": 1, "jame": 1, "xielo": 1, "frozen": 1, "jcobbb": 1, "twistzz": 1, "jboen": 1, "neityu": 1, "phzy": 1, "siuhy": 1, "staehr": 1, "ryu": 1, "cmtry": 1, "alex666": 1, "npl": 1, "nilo": 1, "susp": 1, "martinezsa": 1, "chr1zn": 1, "slaxz-": 1, "swisher": 1, "s1n": 1, "jba": 1, "lake": 1, "fl4mus": 1, "rez": 1, "tauson": 1, "hypex": 1, "saffee": 1, "snow": 1, "biguzera": 1};
 function hsh(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function figure(kind){
  var I='#141210',R='#d4231c',C='#e6dbc2';
@@ -531,9 +531,9 @@ function applyTw(){var m=H().slice(1).split("--");if(m[0]!=="p")return;var t=TW[
  if(!t||!w||w.parentNode.querySelector(".twc")||CR[m[1]])return;var d=document.createElement("div");d.className="twc";
  d.innerHTML='Аватар: <a href="https://www.twitch.tv/'+esc(t.login)+'" target="_blank" rel="noopener noreferrer">twitch.tv/'+esc(t.login)+'</a>';w.parentNode.insertBefore(d,w.nextSibling)}
 window.addEventListener("hashchange",function(){setTimeout(applyTw,0)});
-try{fetch("/data/twitch.json").then(function(r){return r.ok?r.json():{}}).then(function(j){TW=j||{};if(Object.keys(TW).length){var app=document.getElementById("app");if(app)app.dataset.p="";route();applyTw()}}).catch(function(){})}catch(e){}
+try{fetch("/data/twitch.json?h="+(Date.now()/36e5|0)).then(function(r){return r.ok?r.json():{}}).then(function(j){TW=j||{};if(Object.keys(TW).length){var app=document.getElementById("app");if(app)app.dataset.p="";route();applyTw()}}).catch(function(){})}catch(e){}
 
-try{fetch("/data/cut.json").then(function(r){return r.ok?r.json():{}}).then(function(j){CUT=j||{};if(Object.keys(CUT).length){var app=document.getElementById("app");if(app)app.dataset.p="";route()}}).catch(function(){})}catch(e){}
+try{fetch("/data/cut.json?h="+(Date.now()/36e5|0)).then(function(r){return r.ok?r.json():{}}).then(function(j){CUT=j||{};if(Object.keys(CUT).length){var app=document.getElementById("app");if(app)app.dataset.p="";route()}}).catch(function(){})}catch(e){}
 
 /* ===== v19: логотип команды, если файл есть в img/teams, иначе тег ===== */
 function lgi(slug){return '<img src="/img/teams/'+slug+'.png?v=2" alt="" onload="this.parentNode.classList.add(\'lg\')" onerror="this.remove()">'}
@@ -663,7 +663,7 @@ var _vTeam=vTeam;vTeam=function(t){var s=_vTeam(t),k=s.indexOf('<div class="tw"'
 
 /* ===== v26: матчи, форма, карты и соперники команды (data/live.json из PandaScore) ===== */
 var LIVE=null;
-try{fetch("/data/live.json").then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.teams){LIVE=j;var app=document.getElementById("app");if(app&&/^#?(t|p)--/.test(H()||"")){app.dataset.p="";route()}}}).catch(function(){})}catch(e){}
+try{fetch("/data/live.json?h="+(Date.now()/36e5|0)).then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.teams){LIVE=j;var app=document.getElementById("app");if(app&&/^#?(t|p)--/.test(H()||"")){app.dataset.p="";route()}}}).catch(function(){})}catch(e){}
 function dmy(s){if(!s)return "";var d=new Date(s);return ("0"+d.getUTCDate()).slice(-2)+"."+("0"+(d.getUTCMonth()+1)).slice(-2)+"."+d.getUTCFullYear()}
 function tname(m){var l=m.league||"",s=(m.serie||"").replace(/\s*20\d\d$/,"");var y=(m.at||"").slice(0,4);return (l+(s&&s.toLowerCase()!==l.toLowerCase()?" "+s:"")+(y?" "+y:"")).trim()||m.tour||""}
 function tLive(t){var x=LIVE&&LIVE.teams&&LIVE.teams[t.slug];if(!x)return "";var ru=LG()==="ru",L=function(r,e,o){return ru?r.replace(/\{(\w+)\}/g,function(_,n){return o[n]}):TX(e,o)};
@@ -901,7 +901,7 @@ var CMAP={"Brazil": "Бразилия", "Russia": "Россия", "Denmark": "Д
 
 /* ===== v34: настройки коротких профилей из data/csconfig.json ===== */
 var CSC={};
-try{fetch("/data/csconfig.json").then(function(r){return r.ok?r.json():{}}).then(function(j){CSC=j||{};var app=document.getElementById("app");if(app&&/^#?p--/.test(H()||"")){app.dataset.p="";route()}}).catch(function(){})}catch(e){}
+try{fetch("/data/csconfig.json?h="+(Date.now()/36e5|0)).then(function(r){return r.ok?r.json():{}}).then(function(j){CSC=j||{};var app=document.getElementById("app");if(app&&/^#?p--/.test(H()||"")){app.dataset.p="";route()}}).catch(function(){})}catch(e){}
 function cscX(c){var n=c&&newDecode(c);if(!n)return null;var hex="#"+n.rgb.map(function(z){return ("0"+z.toString(16)).slice(-2)}).join("");return {size:n.length,gap:Math.max(0,n.gap),thick:n.thick,dot:n.dot,only:0,outline:n.outline,alpha:n.alpha,hex:hex,rgb:n.rgb,color:cname(n.rgb),dyn:0,code:c}}
 (function(){var _vl2=vLite;vLite=function(q){var h=_vl2(q),c=CSC[q.slug];if(!c)return h;var ru=LG()==="ru",L=function(r,e){return ru?r:TX(e)},P=c.params||{},x=cscX(c.code);
  var row=function(a){return a[1]?'<div><span>'+a[0]+'</span><b>'+esc(a[1])+'</b></div>':''};
