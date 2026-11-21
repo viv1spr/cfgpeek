@@ -1,29 +1,38 @@
 {
- "log": [],
+ "log": [
+  "429 /csgo/matches/upcoming {'filter[opponent_id]': 125847, 'sort': 'begin_at', 'per_page': 10}",
+  "429 /csgo/matches/upcoming {'filter[opponent_id]': 125847, 'sort': 'begin_at', 'per_page': 10}",
+  "429 /csgo/matches/upcoming {'filter[opponent_id]': 125847, 'sort': 'begin_at', 'per_page': 10}",
+  "429 /csgo/teams {'search[name]': 'paiN Gaming', 'per_page': 50}"
+ ],
  "sample": {
-  "league": {
-   "id": 5413,
-   "name": "FISSURE PLAYGROUND",
-   "url": null,
-   "slug": "cs-go-fissure-playground",
-   "modified_at": "2025-06-28T15:01:16Z",
-   "image_url": "https://cdn-api.pandascore.co/images/league/image/5413/fissure_playgrgound_icon_lightmode-png"
-  },
-  "serie_id": 10895,
-  "number_of_games": 3,
-  "videogame": {
-   "id": 3,
-   "name": "Counter-Strike",
-   "slug": "cs-go"
-  },
-  "original_scheduled_at": "2026-09-08T09:00:00Z",
-  "begin_at": null,
-  "scheduled_at": "2026-09-08T09:00:00Z",
-  "end_at": null,
-  "videogame_version": null,
-  "match_type": "best_of",
-  "winner": null,
+  "winner_type": "Team",
+  "rescheduled": false,
   "draw": false,
+  "number_of_games": 3,
+  "modified_at": "2026-08-30T07:08:39Z",
+  "live": {
+   "supported": false,
+   "url": null,
+   "opens_at": null
+  },
+  "scheduled_at": "2026-09-08T09:00:00Z",
+  "results": [
+   {
+    "team_id": 3249,
+    "score": 0
+   },
+   {
+    "team_id": 124530,
+    "score": 0
+   }
+  ],
+  "videogame_title": {
+   "id": 13,
+   "name": "Counter-Strike 2",
+   "slug": "cs-2",
+   "videogame_id": 3
+  },
   "games": [
    {
     "complete": false,
@@ -80,9 +89,8 @@
     "winner_type": "Team"
    }
   ],
-  "rescheduled": false,
-  "status": "canceled",
-  "tournament_id": 21767,
+  "winner_id": null,
+  "forfeit": false,
   "tournament": {
    "id": 21767,
    "name": "Group B",
@@ -103,7 +111,17 @@
    "has_bracket": true,
    "live_supported": false
   },
-  "slug": "big-vs-furia-2026-09-08",
+  "videogame": {
+   "id": 3,
+   "name": "Counter-Strike",
+   "slug": "cs-go"
+  },
+  "status": "canceled",
+  "serie_id": 10895,
+  "detailed_stats": true,
+  "winner": null,
+  "match_type": "best_of",
+  "videogame_version": null,
   "streams_list": [
    {
     "main": false,
@@ -120,18 +138,25 @@
     "raw_url": "https://www.twitch.tv/fissure_cs_eng"
    }
   ],
-  "league_id": 5413,
-  "results": [
-   {
-    "team_id": 3249,
-    "score": 0
-   },
-   {
-    "team_id": 124530,
-    "score": 0
-   }
-  ],
-  "winner_type": "Team",
+  "serie": {
+   "id": 10895,
+   "name": "",
+   "year": 2026,
+   "slug": "cs-go-fissure-playground-3-2026",
+   "begin_at": "2026-09-07T23:00:00Z",
+   "end_at": "2026-09-13T12:26:00Z",
+   "winner_id": null,
+   "winner_type": "Team",
+   "modified_at": "2026-09-13T15:59:45Z",
+   "league_id": 5413,
+   "season": "3",
+   "full_name": "Season 3 2026"
+  },
+  "game_advantage": null,
+  "end_at": null,
+  "id": 1654291,
+  "name": "Upper bracket quarterfinal 4: BIG vs FURIA",
+  "begin_at": null,
   "opponents": [
    {
     "type": "Team",
@@ -160,37 +185,17 @@
     }
    }
   ],
-  "forfeit": false,
-  "id": 1654291,
-  "name": "Upper bracket quarterfinal 4: BIG vs FURIA",
-  "detailed_stats": true,
-  "live": {
-   "supported": false,
+  "slug": "big-vs-furia-2026-09-08",
+  "tournament_id": 21767,
+  "league": {
+   "id": 5413,
+   "name": "FISSURE PLAYGROUND",
    "url": null,
-   "opens_at": null
+   "slug": "cs-go-fissure-playground",
+   "modified_at": "2025-06-28T15:01:16Z",
+   "image_url": "https://cdn-api.pandascore.co/images/league/image/5413/fissure_playgrgound_icon_lightmode-png"
   },
-  "winner_id": null,
-  "modified_at": "2026-08-30T07:08:39Z",
-  "serie": {
-   "id": 10895,
-   "name": "",
-   "year": 2026,
-   "slug": "cs-go-fissure-playground-3-2026",
-   "begin_at": "2026-09-07T23:00:00Z",
-   "end_at": "2026-09-13T12:26:00Z",
-   "winner_id": null,
-   "winner_type": "Team",
-   "modified_at": "2026-09-13T15:59:45Z",
-   "league_id": 5413,
-   "season": "3",
-   "full_name": "Season 3 2026"
-  },
-  "game_advantage": null,
-  "videogame_title": {
-   "id": 13,
-   "name": "Counter-Strike 2",
-   "slug": "cs-2",
-   "videogame_id": 3
-  }
+  "league_id": 5413,
+  "original_scheduled_at": "2026-09-08T09:00:00Z"
  }
 }
