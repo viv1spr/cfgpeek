@@ -117,9 +117,9 @@ function vInfo(p){var t=TB[p.team],x=last(p);document.title=p.nick+" CS2: при
 function vTeam(t){var ro=D.players.filter(function(p){return p.team===t.slug});document.title=t.name+" CS2: состав, прицелы и конфиги | CfgPeek";
  return shell(crumbs([["home","Главная"],["teams","Команды"],["",t.name]]),
   '<section class="phead"><div class="ava" style="align-items:center;font:700 34px var(--disp)">'+t.tag+tlogo(t)+'</div><div class="pname"><h1>'+esc(t.name)+'</h1><div class="chips"><span class="chip r">'+t.tag+'</span><span class="chip">'+t.country+'</span></div></div></section>'+
+  '<section class="tcards"><div class="sec-h"><h2>Прицелы состава</h2></div><div class="cards">'+ro.map(pcard).join("")+'</div></section>'+
   '<div class="tw" style="margin-top:24px"><table><thead><tr><th>Игрок</th><th>Роль</th><th>eDPI</th><th>Прицел</th></tr></thead><tbody>'+
-  ro.map(function(p){return '<tr><td><a href="#p--'+p.slug+'"><b>'+esc(p.nick)+'</b></a></td><td>'+esc(p.role)+'</td><td>'+p.edpi+'</td><td><a href="#p--'+p.slug+'--crosshair" style="color:var(--red);font-weight:700">от '+ru(last(p).date)+'</a></td></tr>'}).join("")+'</tbody></table></div>'+
-  '<section><div class="sec-h"><h2>Прицелы состава</h2></div><div class="cards">'+ro.map(pcard).join("")+'</div></section>')}
+  ro.map(function(p){return '<tr><td><a href="#p--'+p.slug+'"><b>'+esc(p.nick)+'</b></a></td><td>'+esc(p.role)+'</td><td>'+p.edpi+'</td><td><a href="#p--'+p.slug+'--crosshair" style="color:var(--red);font-weight:700">от '+ru(last(p).date)+'</a></td></tr>'}).join("")+'</tbody></table></div>')}
 
 function vCrosshairs(){document.title="Коды прицелов про-игроков CS2 2026: donk, m0NESY, ZywOo и ещё "+(D.players.length-3)+" | CfgPeek";
  var ps=D.players.slice();
@@ -685,7 +685,7 @@ function tLive(t){var x=LIVE&&LIVE.teams&&LIVE.teams[t.slug];if(!x)return "";var
  var h='<section class="card2 tlive"><header><h2>'+ico("cross")+L("Матчи и статистика","Matches and stats",{})+'</h2><span class="tl-u">'+L("обновлено {d}","updated {d}",{d:dmy(LIVE.updated)})+'</span></header>';
  if(P.length){
   h+='<div class="tl-k"><div><span>'+L("Матчей с {d}","Matches since {d}",{d:since})+'</span><b>'+P.length+'</b></div><div><span>'+L("Победы","Wins",{})+'</span><b>'+W+' · '+Math.round(100*W/P.length)+'%</b></div>'+
-   '<div><span>'+L("Серия","Streak",{})+'</span><b class="'+(P[0].win?"w":"l")+'">'+streak+(P[0].win?L(" побед"," W",{}):L(" поражений"," L",{}))+'</b></div>'+
+   '<div><span>'+L("Серия","Streak",{})+'</span><b class="'+(P[0].win?"w":"l")+'">'+streak+(function(n,w){var f=n%10==1&&n%100!=11?0:n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?1:2;return w?L([" победа"," победы"," побед"][f]," W",{}):L([" поражение"," поражения"," поражений"][f]," L",{})})(streak,P[0].win)+'</b></div>'+
    '<div><span>'+L("Форма, 10 матчей","Form, last 10",{})+'</span><b class="tl-f">'+last10.map(function(m){return '<i class="'+(m.win?"w":"l")+'" title="'+esc((m.opp||"")+" "+(m.us!=null?m.us+":"+m.them:""))+'"></i>'}).join("")+'</b></div></div>';
  }
  var row=function(m,fut){return '<li class="'+(fut?"":m.win?"w":"l")+'"><time>'+dmy(m.at)+'</time><b>'+esc(m.opp||"TBD")+'</b><span class="tl-s">'+(fut?"BO"+(m.bo||"?"):(m.us!=null?m.us+":"+m.them:""))+'</span><small>'+esc(tname(m))+'</small></li>'};
