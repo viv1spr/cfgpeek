@@ -298,7 +298,7 @@ function rows(list){return '<div class="kv2">'+list.filter(function(r){return r[
 var HUDC={"Team Color":0,"White":1,"Bright White":2,"Light Blue":3,"Blue":4,"Purple":5,"Pink":6,"Red":7,"Orange":8,"Yellow":9,"Green":10,"Aqua":11};
 function yn(v){return v==="Yes"?1:v==="No"?0:null}
 function cfgText(p){var x=last(p),vm=(p.vm||"").split(" "),b=p.bob||{},h=p.hud||{},r=p.radar||{},v=p.video||{},L=[];
- L.push("// "+p.nick+" — конфиг CS2 от CfgPeek ("+location.hostname+")","// Данные на "+ru(D.snap),"// Вставьте этот текст в autoexec.cfg: Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg/autoexec.cfg","// Если файла нет, создайте его. Настройки применятся при следующем запуске игры.","");
+ L.push("// "+p.nick+" — конфиг CS2 от CfgPeek ("+location.hostname+")","// Данные на "+ru(D.snap),"// Вставьте этот текст в autoexec.cfg: Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg/autoexec.cfg","// Если файла нет, создайте его. В параметры запуска Steam добавьте +exec autoexec,","// тогда настройки будут применяться при каждом запуске игры.","");
  L.push("// --- Мышь ---","sensitivity \""+p.sens+"\"","zoom_sensitivity_ratio \""+p.zoom+"\"","");
  if(p.vm)L.push("// --- Viewmodel ---","viewmodel_fov \""+vm[0]+"\"","viewmodel_offset_x \""+vm[1]+"\"","viewmodel_offset_y \""+vm[2]+"\"","viewmodel_offset_z \""+vm[3]+"\"");
  if(b.lower_amt!=null){L.push("cl_bob_lower_amt \""+b.lower_amt+"\"","cl_bobamt_lat \""+b.amt_lat+"\"","cl_bobamt_vert \""+b.amt_vert+"\"","cl_bobcycle \""+b.cycle+"\"")}
