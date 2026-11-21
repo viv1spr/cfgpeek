@@ -40,7 +40,7 @@ function arInfo(a,f){a=String(a||"");f=String(f||"");var m=a.match(/(\d+)\s*[:x�
  if(/stretch|растян/.test(t))mode="st";else if(/black|bars|черн|чёрн/.test(t))mode="bb";else mode=r<1.7?"st":"nat";
  if(Math.abs(r-16/9)<0.02)mode="nat";var W=16/9,sx=(W/r).toFixed(3),bw=Math.max(0,(1-r/W)/2*100).toFixed(1);
  return {mode:mode,r:m?m[1]+":"+m[2]:"16:9",sx:sx,bw:bw,word:mode==="st"?"растянутое":mode==="bb"?"чёрные полосы":"на весь экран"}}
-function arGrid(a,f,inner){var q=arInfo(a,f);if(q.mode==="nat")return '<div class="mapsgrid">'+inner+'</div>';
+function arGrid(a,f,inner){var q=arInfo(a,f);if(1)return '<div class="mapsgrid">'+inner+'</div>';
  return '<div class="arw"><div class="arbar" role="group"><button type="button" aria-pressed="true" data-arv="'+q.mode+'"><span>Как у игрока</span> · '+q.r+' <span>'+q.word+'</span></button><button type="button" aria-pressed="false" data-arv="nat">16:9</button></div><div class="mapsgrid ar-'+q.mode+'" style="--sx:'+q.sx+';--bw:'+q.bw+'%">'+inner+'</div></div>'}
 document.addEventListener("click",function(e){var b=e.target.closest("[data-arv]");if(!b)return;var w=b.closest(".arw"),g=w.querySelector(".mapsgrid");g.classList.remove("ar-st","ar-bb");if(b.dataset.arv!=="nat")g.classList.add("ar-"+b.dataset.arv);w.querySelectorAll("[data-arv]").forEach(function(o){o.setAttribute("aria-pressed",o===b)})});
 function scene(x,o){o=o||{};var m=o.map||"mirage";
