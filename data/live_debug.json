@@ -1,22 +1,26 @@
 {
- "log": [
-  "429 /csgo/matches/upcoming {'filter[opponent_id]': 125847, 'sort': 'begin_at', 'per_page': 10}",
-  "429 /csgo/matches/upcoming {'filter[opponent_id]': 125847, 'sort': 'begin_at', 'per_page': 10}",
-  "429 /csgo/matches/upcoming {'filter[opponent_id]': 125847, 'sort': 'begin_at', 'per_page': 10}",
-  "429 /csgo/teams {'search[name]': 'paiN Gaming', 'per_page': 50}"
- ],
+ "log": [],
  "sample": {
-  "winner_type": "Team",
-  "rescheduled": false,
-  "draw": false,
-  "number_of_games": 3,
-  "modified_at": "2026-08-30T07:08:39Z",
-  "live": {
-   "supported": false,
-   "url": null,
-   "opens_at": null
+  "tournament": {
+   "id": 21767,
+   "name": "Group B",
+   "type": "offline",
+   "country": "CN",
+   "begin_at": "2026-09-07T23:00:00Z",
+   "detailed_stats": true,
+   "end_at": "2026-09-10T14:19:00Z",
+   "winner_id": null,
+   "winner_type": "Team",
+   "slug": "cs-go-fissure-playground-3-2026-group-b",
+   "region": "ASIA",
+   "serie_id": 10895,
+   "modified_at": "2026-09-13T15:59:45Z",
+   "league_id": 5413,
+   "prizepool": null,
+   "tier": "a",
+   "has_bracket": true,
+   "live_supported": false
   },
-  "scheduled_at": "2026-09-08T09:00:00Z",
   "results": [
    {
     "team_id": 3249,
@@ -27,12 +31,6 @@
     "score": 0
    }
   ],
-  "videogame_title": {
-   "id": 13,
-   "name": "Counter-Strike 2",
-   "slug": "cs-2",
-   "videogame_id": 3
-  },
   "games": [
    {
     "complete": false,
@@ -89,39 +87,48 @@
     "winner_type": "Team"
    }
   ],
-  "winner_id": null,
-  "forfeit": false,
-  "tournament": {
-   "id": 21767,
-   "name": "Group B",
-   "type": "offline",
-   "country": "CN",
-   "slug": "cs-go-fissure-playground-3-2026-group-b",
-   "begin_at": "2026-09-07T23:00:00Z",
-   "detailed_stats": true,
-   "end_at": "2026-09-10T14:19:00Z",
-   "winner_id": null,
-   "winner_type": "Team",
-   "region": "ASIA",
-   "serie_id": 10895,
-   "modified_at": "2026-09-13T15:59:45Z",
-   "league_id": 5413,
-   "prizepool": null,
-   "tier": "a",
-   "has_bracket": true,
-   "live_supported": false
-  },
+  "detailed_stats": true,
+  "scheduled_at": "2026-09-08T09:00:00Z",
   "videogame": {
    "id": 3,
    "name": "Counter-Strike",
    "slug": "cs-go"
   },
-  "status": "canceled",
-  "serie_id": 10895,
-  "detailed_stats": true,
-  "winner": null,
-  "match_type": "best_of",
+  "videogame_title": {
+   "id": 13,
+   "name": "Counter-Strike 2",
+   "slug": "cs-2",
+   "videogame_id": 3
+  },
+  "number_of_games": 3,
   "videogame_version": null,
+  "begin_at": null,
+  "league": {
+   "id": 5413,
+   "name": "FISSURE PLAYGROUND",
+   "url": null,
+   "slug": "cs-go-fissure-playground",
+   "modified_at": "2025-06-28T15:01:16Z",
+   "image_url": "https://cdn-api.pandascore.co/images/league/image/5413/fissure_playgrgound_icon_lightmode-png"
+  },
+  "original_scheduled_at": "2026-09-08T09:00:00Z",
+  "serie": {
+   "id": 10895,
+   "name": "",
+   "year": 2026,
+   "begin_at": "2026-09-07T23:00:00Z",
+   "end_at": "2026-09-13T12:26:00Z",
+   "winner_id": null,
+   "winner_type": "Team",
+   "slug": "cs-go-fissure-playground-3-2026",
+   "modified_at": "2026-09-13T15:59:45Z",
+   "league_id": 5413,
+   "season": "3",
+   "full_name": "Season 3 2026"
+  },
+  "rescheduled": false,
+  "status": "canceled",
+  "end_at": null,
   "streams_list": [
    {
     "main": false,
@@ -138,25 +145,21 @@
     "raw_url": "https://www.twitch.tv/fissure_cs_eng"
    }
   ],
-  "serie": {
-   "id": 10895,
-   "name": "",
-   "year": 2026,
-   "slug": "cs-go-fissure-playground-3-2026",
-   "begin_at": "2026-09-07T23:00:00Z",
-   "end_at": "2026-09-13T12:26:00Z",
-   "winner_id": null,
-   "winner_type": "Team",
-   "modified_at": "2026-09-13T15:59:45Z",
-   "league_id": 5413,
-   "season": "3",
-   "full_name": "Season 3 2026"
-  },
-  "game_advantage": null,
-  "end_at": null,
+  "modified_at": "2026-08-30T07:08:39Z",
+  "draw": false,
+  "winner_type": "Team",
+  "winner_id": null,
+  "league_id": 5413,
   "id": 1654291,
   "name": "Upper bracket quarterfinal 4: BIG vs FURIA",
-  "begin_at": null,
+  "tournament_id": 21767,
+  "winner": null,
+  "forfeit": false,
+  "live": {
+   "supported": false,
+   "url": null,
+   "opens_at": null
+  },
   "opponents": [
    {
     "type": "Team",
@@ -185,17 +188,9 @@
     }
    }
   ],
+  "serie_id": 10895,
   "slug": "big-vs-furia-2026-09-08",
-  "tournament_id": 21767,
-  "league": {
-   "id": 5413,
-   "name": "FISSURE PLAYGROUND",
-   "url": null,
-   "slug": "cs-go-fissure-playground",
-   "modified_at": "2025-06-28T15:01:16Z",
-   "image_url": "https://cdn-api.pandascore.co/images/league/image/5413/fissure_playgrgound_icon_lightmode-png"
-  },
-  "league_id": 5413,
-  "original_scheduled_at": "2026-09-08T09:00:00Z"
+  "match_type": "best_of",
+  "game_advantage": null
  }
 }
