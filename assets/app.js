@@ -744,7 +744,7 @@ function pdata(k){var A=D.players,ru=LG()==="ru",L=function(r,e){return ru?r:TX(
  if(k==="vm")return tbl2(["viewmodel (fov x y z)",L("Игроков","Players"),L("Например","For example")],cnt(A.map(function(p){return p.vm})).slice(0,10).map(function(r){return ['<code>'+esc(r[0])+'</code>',r[1],who(function(p){return p.vm===r[0]})]}));
  return ""}
 var _pcard0=postCard;postCard=function(b){var p=PL(b),S=ST();if(p.ru===undefined&&!b.ru)return _pcard0(b);p=Object.assign({},p,{lead:fillT(p.lead,S)});return _pcard0(p)};
-vBlog=function(){var ru=LG()==="ru";document.title=ru?"Блог CfgPeek: гайды и аналитика по CS2":TX("CfgPeek blog: CS2 guides and analytics");
+vBlog=function(){var ru=LG()==="ru";document.title="Блог CfgPeek: гайды и аналитика по CS2";
  return shell(crumbs([["home","Главная"],["","Блог"]]),'<div class="pghead" style="margin-bottom:0"><h1>Блог</h1><p>Гайды по настройкам и аналитика по прицелам и сенсе профи.</p></div><div class="blog">'+postsFor().map(postCard).join("")+'</div>')};
 vPost=function(b0){var b=PL(b0),S=ST(),ru=LG()==="ru";document.title=b.title+" | CfgPeek";
  var hs=[];var body=b.body.map(function(x){var t=x[0],v=x[1];
