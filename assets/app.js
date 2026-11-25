@@ -304,24 +304,20 @@ function age(b){if(!b)return null;var d=new Date(b),n=new Date(D.snap);var a=n.g
 function rows(list){return '<div class="kv2">'+list.filter(function(r){return r[1]!==null&&r[1]!==undefined&&r[1]!==""}).map(function(r){return '<div><span>'+r[0]+'</span><b>'+esc(r[1])+'</b></div>'}).join("")+'</div>'}
 var HUDC={"Team Color":0,"White":1,"Bright White":2,"Light Blue":3,"Blue":4,"Purple":5,"Pink":6,"Red":7,"Orange":8,"Yellow":9,"Green":10,"Aqua":11};
 function yn(v){return v==="Yes"?1:v==="No"?0:null}
-function cfgText(p){var x=last(p),vm=(p.vm||"").split(" "),b=p.bob||{},h=p.hud||{},r=p.radar||{},v=p.video||{},L=[];
- L.push("// "+p.nick+" — конфиг CS2 от CfgPeek ("+location.hostname+")","// Данные на "+ru(D.snap),"// Вставьте этот текст в autoexec.cfg: Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg/autoexec.cfg","// Если файла нет, создайте его. В параметры запуска Steam добавьте +exec autoexec,","// тогда настройки будут применяться при каждом запуске игры.","");
- L.push("// --- Мышь ---","sensitivity \""+p.sens+"\"","zoom_sensitivity_ratio \""+p.zoom+"\"","");
- if(p.vm)L.push("// --- Viewmodel ---","viewmodel_fov \""+vm[0]+"\"","viewmodel_offset_x \""+vm[1]+"\"","viewmodel_offset_y \""+vm[2]+"\"","viewmodel_offset_z \""+vm[3]+"\"");
- if(b.lower_amt!=null){L.push("cl_bob_lower_amt \""+b.lower_amt+"\"","cl_bobamt_lat \""+b.amt_lat+"\"","cl_bobamt_vert \""+b.amt_vert+"\"","cl_bobcycle \""+b.cycle+"\"")}
- L.push("");
- if(h.scale!=null||HUDC[h.color]!=null||r.zoom!=null){L.push("// --- HUD и радар ---");
+function cfgText(p){var x=last(p),vm=(p.vm||"").split(" "),h=p.hud||{},r=p.radar||{},v=p.video||{},L=[],A=function(t){return String(t==null?"":t).replace(/[×]/g,"x").replace(/[^\x20-\x7E]/g,"")};
+ L.push("// "+A(p.nick)+" CS2 config - cfgpeek.com","// Data from "+D.snap,"// Put this file in: Steam/steamapps/common/Counter-Strike Global Offensive/game/csgo/cfg/","// Run it in the console: exec <file name>   (example: exec autoexec)","// Run it on every start: Steam > CS2 > Properties > Launch options: +exec autoexec","");
+ L.push("// Mouse","sensitivity \""+p.sens+"\"","zoom_sensitivity_ratio \""+p.zoom+"\"","");
+ if(p.vm)L.push("// Viewmodel","viewmodel_fov \""+vm[0]+"\"","viewmodel_offset_x \""+vm[1]+"\"","viewmodel_offset_y \""+vm[2]+"\"","viewmodel_offset_z \""+vm[3]+"\"","");
+ if(h.scale!=null||HUDC[h.color]!=null||r.zoom!=null){L.push("// HUD and radar");
   if(h.scale!=null)L.push("hud_scaling \""+h.scale+"\"");if(HUDC[h.color]!=null)L.push("cl_hud_color \""+HUDC[h.color]+"\"");
   if(yn(r.centers)!=null)L.push("cl_radar_always_centered \""+yn(r.centers)+"\"");if(yn(r.rotating)!=null)L.push("cl_radar_rotate \""+yn(r.rotating)+"\"");
   if(yn(r.toggle_shape)!=null)L.push("cl_radar_square_with_scoreboard \""+yn(r.toggle_shape)+"\"");if(r.hud_size!=null)L.push("cl_hud_radar_scale \""+r.hud_size+"\"");if(r.zoom!=null)L.push("cl_radar_scale \""+r.zoom+"\"");L.push("")}
  if(v.max_fps!=null){L.push("fps_max \""+v.max_fps+"\"","")}
- L.push("// --- Прицел ---",x.code?"// Код прицела (Настройки → Прицел → Поделиться или импортировать): "+x.code:"// Прицел: длина "+x.size+", толщина "+x.thick+", разрыв "+x.gap+", цвет RGB "+x.rgb.join(" "),"");
- L.push("// --- Параметры запуска (Steam → Свойства CS2) ---","// "+p.launch,"");
- L.push("// --- Видео (выставляются в меню игры) ---","// Разрешение: "+p.res+" "+p.aspect);
- [["brightness","Яркость"],["display_mode","Режим"],["boost_contrast","Контраст игроков"],["vsync","V-Sync"],["reflex","NVIDIA Reflex"],["msaa","Сглаживание"],["shadow_quality","Тени"],["texture_detail","Текстуры"],["texture_filtering","Фильтрация"],["shader_detail","Шейдеры"],["particle_detail","Частицы"],["ambient_occlusion","Ambient occlusion"],["hdr","HDR"],["fsr","FSR"]].forEach(function(k){if(v[k[0]]!=null)L.push("// "+k[1]+": "+v[k[0]])});
- L.push("","// --- Девайсы ---","// Мышь: "+p.mouse,"// Коврик: "+p.pad,"// Клавиатура: "+p.kb,"// Наушники: "+p.headset,"// Монитор: "+p.monitor);
- var g=p.gx||{};if(g.cpu)L.push("// Процессор: "+g.cpu);if(g.gpu)L.push("// Видеокарта: "+g.gpu);
- L.push("","echo \"CfgPeek: конфиг "+p.nick+" загружен\"");return L.join("\n")}
+ L.push("// Crosshair");if(x.code)L.push("apply_crosshair_code "+x.code,"// If the crosshair did not change: Settings > Crosshair > Share or import > paste the code above");else L.push("// Crosshair: size "+x.size+", thickness "+x.thick+", gap "+x.gap+", color RGB "+x.rgb.join(" "));L.push("");
+ if(p.launch&&p.launch!=="не использует")L.push("// Launch options (Steam > CS2 > Properties): "+A(p.launch),"");
+ L.push("// Video (set in the game menu): "+A(p.res)+" "+A(p.aspect));
+ ["brightness","display_mode","boost_contrast","vsync","reflex","msaa","shadow_quality","texture_detail","texture_filtering","shader_detail","particle_detail","ambient_occlusion","hdr","fsr"].forEach(function(k){if(v[k]!=null)L.push("// "+k+": "+A(v[k]))});
+ L.push("","// Gear: "+A(p.mouse)+" / "+A(p.pad)+" / "+A(p.monitor),"","host_writeconfig","echo \"CfgPeek: "+A(p.nick)+" config loaded\"");return L.join("\n")}
 var DL=null;try{window.claude&&window.claude.use&&window.claude.use("downloads").then(function(d){DL=d}).catch(function(){})}catch(e){}
 function downloadCfg(p){var txt=cfgText(p);function ok(){if(typeof cfgModal==="function")cfgModal(p);else toast("Конфиг скопирован. Вставьте его в autoexec.cfg")}function fb(){try{var t=document.createElement("textarea");t.value=txt;t.setAttribute("readonly","");t.style.cssText="position:fixed;left:-9999px;top:0";document.body.appendChild(t);t.select();var r=document.execCommand("copy");t.remove();r?ok():toast("Не удалось скопировать конфиг")}catch(e){toast("Не удалось скопировать конфиг")}}
  try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}}
